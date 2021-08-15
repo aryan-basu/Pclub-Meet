@@ -37,7 +37,9 @@ const Meeting = (props) => {
             videoGrid.current.append(video);
         } 
     }
-
+  const handleDisconnect=()=>{
+    history.push('/meetend');
+  }
     //audio
     const handleAudioClick = () => {
         const enabled = stream.getAudioTracks()[0].enabled;
@@ -181,7 +183,7 @@ const Meeting = (props) => {
                 </div>
                 <div class='mute'>
                     <i class="far fa-microphone media-icon three" onClick={handleAudioClick} ></i>
-                    <i class="far fa-phone media-icon four"></i>
+                    <i class="far fa-phone media-icon four"onClick={handleDisconnect}></i>
                     <i class="far fa-video media-icon five" onClick={handleVideoClick} ></i>
                 </div>
                 <div>
