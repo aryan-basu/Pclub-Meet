@@ -127,7 +127,7 @@ const Preview = (props) => {
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>
                     <CardContent className='video'>
-                        <video autoPlay ref={myVideo} />
+                        <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
