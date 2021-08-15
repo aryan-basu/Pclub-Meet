@@ -44,11 +44,13 @@ const Preview = (props) => {
         if( enabled ){
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
+            console.log('mic disabled')
             //render html
         }
         else{
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
+            console.log('mic enabled')
             //render html
         }
     }
