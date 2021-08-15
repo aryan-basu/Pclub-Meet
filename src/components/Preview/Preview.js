@@ -26,10 +26,10 @@ const Preview = (props) => {
     const [roomId, setroomId] = useState('');
     const myVideo = useRef()
     //stream
-    const [stream,setStream] = useState();
+    const [stream, setStream] = useState();
     //states of audio & video
-    const [audioState,setAudioState] = useState(true);
-    const [videoState,setVideoState] = useState(true);
+    const [audioState, setAudioState] = useState(true);
+    const [videoState, setVideoState] = useState(true);
 
 
     //firebase
@@ -41,12 +41,12 @@ const Preview = (props) => {
     //audio
     const handleAudioClick = () => {
         const enabled = stream.getAudioTracks()[0].enabled;
-        if( enabled ){
+        if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
             //render html
         }
-        else{
+        else {
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
             //render html
@@ -56,12 +56,12 @@ const Preview = (props) => {
     //video
     const handleVideoClick = () => {
         const enabled = stream.getVideoTracks()[0].enabled;
-        if( enabled ){
+        if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
             setVideoState(false)
             //render html
         }
-        else{
+        else {
             stream.getVideoTracks()[0].enabled = true;
             setVideoState(true)
             //render html
@@ -82,18 +82,19 @@ const Preview = (props) => {
         })
 
 
-        if ( location.state.isInitiator ) {
+        if (location.state.isInitiator) {
 
-            Axios.get('https://pclub-meet-backend.herokuapp.com/join').then(res => {
+            // Axios.get('https://pclub-meet-backend.herokuapp.com/join').then(res => {
+            Axios.get('http://localhost:5000/join').then(res => {
                 setroomId(res.data.link)
                 const inputLink = document.getElementById('input-with-icon-adornment text')
                 inputLink.value = res.data.link
             })
-            .catch((err) => console.log(err))
+                .catch((err) => console.log(err))
 
         }
 
-        else{
+        else {
             setroomId(location.state.roomId)
             const inputLink = document.getElementById('input-with-icon-adornment text')
             inputLink.value = location.state.roomId
@@ -114,15 +115,15 @@ const Preview = (props) => {
         history.push({
             pathname: newPath,
             state: {
-                currentAudioState : audioState,
-                currentVideoState : videoState
+                currentAudioState: audioState,
+                currentVideoState: videoState
             }
         })
     }
 
     return (
         <div>
-             <Header/>
+            <Header />
             <div className="preview-main">
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>
@@ -130,10 +131,10 @@ const Preview = (props) => {
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
-                        <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
+                        <IconButton size="medium" className='preview-icon' onClick={handleAudioClick} >
                             <BiMicrophone />
                         </IconButton>
-                        <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
+                        <IconButton size="medium" className='preview-icon' onClick={handleVideoClick} >
                             <IoVideocamOutline />
                         </IconButton>
                     </CardActions>

@@ -4,21 +4,19 @@ import Peer from 'peerjs';
 import { io } from 'socket.io-client';
 import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
-
-
+import { Input, InputAdornment, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 const Meeting = (props) => {
-
 
     //firebase
     const history = useHistory();
     const location = useLocation();
-    var user = firebase.auth().currentUser; 
+    var user = firebase.auth().currentUser;
     if (user === null) {
         history.push('/');
     }
     //states
     const [peers, setPeers] = useState({})
-
     const [myId, setMyId] = useState('');
     const [stream, setStream] = useState();
 
@@ -27,19 +25,21 @@ const Meeting = (props) => {
     const myVideo = document.createElement('video')
     myVideo.muted = true; //important
 
+    let messages = useRef()
+
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
         video.srcObject = stream
         video.addEventListener('loadedmetadata', () => { //alert
             video.play()
         })
-        if (videoGrid.current){
+        if (videoGrid.current) {
             videoGrid.current.append(video);
-        } 
+        }
     }
-  const handleDisconnect=()=>{
-    history.push('/meetend');
-  }
+    const handleDisconnect = () => {
+        history.push('/meetend');
+    }
     //audio
     const handleAudioClick = () => {
         const enabled = stream.getAudioTracks()[0].enabled;
@@ -116,10 +116,13 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
-        const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
+        // const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
+        const socket = io("localhost:5000/"); //initializing socket 
         const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'pclub-meet-backend.herokuapp.com',
-            port: '443',
+            // host: 'pclub-meet-backend.herokuapp.com',
+            host: 'localhost',
+            // port: '443',
+            port: '5000',
             path: '/peerjs',
             secure: true
         })
@@ -150,7 +153,7 @@ const Meeting = (props) => {
             })
 
             socket.on('user-connected', userId => {
-                if (userId != myId) {
+                if (userId !== myId) {
                     // user is joining
                     setTimeout(() => {
                         // user joined
@@ -169,13 +172,56 @@ const Meeting = (props) => {
 
     }, [])
 
+    const createMessageElement = (myPeer, socket) => {
+
+        io.on("createMessage", (message, userId) => {
+            messages.innerHTML = messages.innerHTML +
+                `<div class="message">
+                  <b><i class="far fa-user-circle"></i> <span> ${userId === user ? "me" : userId}</span></b>
+                  <span>${message}</span>
+              </div>`;
+        });
+    }
+
+
+
     return (
         <div class="main" >
+            {/* <div class="main__right">
+                <div id='main__chat_window'>
+                    <div className="messages"></div>
+                </div>
+                <div class="main__message_container">
+                    <Input id="chat_message" autocomplete="off" placeholder="Type message here..."
+                        endAdornment={
+                            <InputAdornment position="end" >
+                                <IconButton id='send'> <SendIcon /></IconButton>
+                            </InputAdornment>}
+                    />
+                </div>
+            </div> */}
+            <div id='chats'>
+                <div className="">
+                    <div className="messages" ref={messages}>
+
+                    </div>
+                    {/* <Input class='chat-input' autocomplete="off" placeholder="Type message here..."
+                        endAdornment={<IconButton id='send'> <SendIcon /></IconButton>}
+                    /> */}
+                    <div class="main__message_container">
+                        <input id="chat-input" type="text" autocomplete="off" placeholder="Type message here..." />
+                        <div id="send" class="options__button">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="video-chat-area" >
                 <div id="video-grid" ref={videoGrid} >
 
                 </div>
             </div>
+
             <nav class="bottom-nav" >
                 <div>
                     <i class="fas fa-hand-paper media-icon one" ></i>
@@ -183,7 +229,7 @@ const Meeting = (props) => {
                 </div>
                 <div class='mute'>
                     <i class="far fa-microphone media-icon three" onClick={handleAudioClick} ></i>
-                    <i class="far fa-phone media-icon four"onClick={handleDisconnect}></i>
+                    <i class="far fa-phone media-icon four" onClick={handleDisconnect}></i>
                     <i class="far fa-video media-icon five" onClick={handleVideoClick} ></i>
                 </div>
                 <div>
@@ -192,7 +238,7 @@ const Meeting = (props) => {
                 </div>
             </nav>
 
-        </div>
+        </div >
     );
 }
 

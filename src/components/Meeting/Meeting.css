@@ -1,12 +1,12 @@
-.main{
-  margin : 0 0 65px 0;
+.main {
+  margin: 0 0 65px 0;
 }
 
-html{
+html {
   overflow: hidden;
 }
 
-.video-chat-area{
+.video-chat-area {
   width: 75%;
   height: 91vh;
   overflow: scroll;
@@ -14,10 +14,32 @@ html{
   background-color: rgb(39, 37, 37);
 }
 
-#video-grid{
+#video-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  grid-gap:10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+#chats {
+  width: 350px !important;
+  background-color: #fff;
+  position: absolute !important;
+  /* top: 50%; */
+  right: 0%;
+  height: 90.5vh;
+  border-style: solid;
+}
+/* .display {
+  height: max-content;
+} */
+
+.chat-input {
+  width: 100%;
+}
+
+#send {
+  border-radius: 0 !important;
+  color: #37af4b;
 }
 
 video {
@@ -30,7 +52,7 @@ video {
   -moz-transform: rotateY(180deg);
 }
 
-.bottom-nav{
+.bottom-nav {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -43,18 +65,18 @@ video {
 }
 
 .MuiTab-textColorPrimary.Mui-selected {
-  color: #37AF4B!important;
+  color: #37af4b !important;
 }
 .PrivateTabIndicator-colorPrimary-3 {
-  background-color: var(--green)!important;
-  width: auto!important;
+  background-color: var(--green) !important;
+  width: auto !important;
 }
 
 .media-icon {
   padding: 1rem;
   font-size: 1.25rem;
   color: white;
-  background: #37AF4B;
+  background: #37af4b;
   font-weight: normal;
   cursor: pointer;
   z-index: 2;
@@ -64,22 +86,20 @@ video {
 .media-icon.two,
 .media-icon.six,
 .media-icon.seven {
-    width: 20px;
-    height: 20px;
-    margin: .25rem;
-    border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 0.25rem;
+  border-radius: 50%;
 }
 .media-icon.three {
-    padding: 1rem;
-    padding-left: 2rem;
-    border-bottom-left-radius: 2rem;
-    border-top-left-radius: 2rem;
+  padding: 1rem;
+  padding-left: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-top-left-radius: 2rem;
 }
 .media-icon.five {
-    padding: 1rem;
-    padding-right: 2rem;
-    border-bottom-right-radius: 2rem;
-    border-top-right-radius: 2rem;
+  padding: 1rem;
+  padding-right: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
 }
-
-
