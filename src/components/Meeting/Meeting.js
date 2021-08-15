@@ -45,10 +45,12 @@ const Meeting = (props) => {
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
+            console.log('mic disabled')
             //render html
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
+            console.log('mic enabled')
             //render html
         }
     }
@@ -68,8 +70,7 @@ const Meeting = (props) => {
 
     const connectToNewUser = (userId, stream, myPeer) => {
         const call = myPeer.call(userId, stream)
-        const video = document.createElement('video')
-        video.muted = true;
+        const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream)
         })
@@ -128,8 +129,8 @@ const Meeting = (props) => {
         })
 
         navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
+            audio : true,
+            video : true,
         }).then(stream => {
 
             stream.getAudioTracks()[0].enabled = location.state.currentAudioState;
@@ -140,8 +141,7 @@ const Meeting = (props) => {
 
             myPeer.on('call', call => {
                 call.answer(stream)
-                const video = document.createElement('video')
-                video.muted = true;
+                const video = document.createElement('video') //don't mute this
 
                 call.on('stream', userVideoStream => {
                     addVideoStream(video, userVideoStream)
