@@ -30,6 +30,8 @@ const Preview = (props) => {
     //states of audio & video
     const [audioState,setAudioState] = useState(true);
     const [videoState,setVideoState] = useState(true);
+    const[isVideo,setIsVideo]=useState(true);
+    const[isMic,setIsMic]=useState(true);
 
 
     //firebase
@@ -40,6 +42,7 @@ const Preview = (props) => {
 
     //audio
     const handleAudioClick = () => {
+        setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if( enabled ){
             stream.getAudioTracks()[0].enabled = false;
@@ -57,6 +60,7 @@ const Preview = (props) => {
 
     //video
     const handleVideoClick = () => {
+        setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
         if( enabled ){
             stream.getVideoTracks()[0].enabled = false;
@@ -132,12 +136,14 @@ const Preview = (props) => {
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
-                        <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
-                            <BiMicrophone />
-                        </IconButton>
+                    <i  onClick={handleAudioClick} className={`${isMic ?'far fa-microphone media-icon three':'far fa-microphone-slash media-icon three'}`} ></i>
+                        {/*<IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
+                            <BiMicrophone />  
+                        </IconButton> 
                         <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
                             <IoVideocamOutline />
-                        </IconButton>
+                        </IconButton> */}
+                        <i onClick={handleVideoClick}className={`${isVideo?'far fa-video media-icon five':'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
                 <Input type="text" variant="filled" className='username' placeholder='Add Username' />

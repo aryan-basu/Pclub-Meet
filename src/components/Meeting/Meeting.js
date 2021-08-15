@@ -8,7 +8,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 const Meeting = (props) => {
 
-
+   
     //firebase
     const history = useHistory();
     const location = useLocation();
@@ -17,6 +17,8 @@ const Meeting = (props) => {
         history.push('/');
     }
     //states
+    const[isVideo,setIsVideo]=useState(true);
+    const[isMic,setIsMic]=useState(true);
     const [peers, setPeers] = useState({})
 
     const [myId, setMyId] = useState('');
@@ -42,6 +44,7 @@ const Meeting = (props) => {
   }
     //audio
     const handleAudioClick = () => {
+       setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
@@ -57,6 +60,7 @@ const Meeting = (props) => {
 
     //video
     const handleVideoClick = () => {
+        setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
         if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
@@ -182,9 +186,11 @@ const Meeting = (props) => {
                     <i class="fas fa-ellipsis-h media-icon two"></i>
                 </div>
                 <div class='mute'>
-                    <i class="far fa-microphone media-icon three" onClick={handleAudioClick} ></i>
+                <i  onClick={handleAudioClick} className={`${isMic ?'far fa-microphone media-icon three':'far fa-microphone-slash media-icon three'}`} ></i>
+                
                     <i class="far fa-phone media-icon four"onClick={handleDisconnect}></i>
-                    <i class="far fa-video media-icon five" onClick={handleVideoClick} ></i>
+                    <i onClick={handleVideoClick}className={`${isVideo?'far fa-video media-icon five':'far fa-video-slash media-icon five'}`}></i>
+               
                 </div>
                 <div>
                     <i class="fas fa-user-friends media-icon six"></i>
