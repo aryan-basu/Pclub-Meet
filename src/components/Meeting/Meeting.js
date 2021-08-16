@@ -13,9 +13,15 @@ const Meeting = (props) => {
     const history = useHistory();
     const location = useLocation();
     var user = firebase.auth().currentUser; 
-    if (user === null) {
-        history.push('/');
-    }
+   firebase.auth().onAuthStateChanged(function(user) {
+
+        if(user) {
+           //Here you can place the code that you want to run if the user is logged in
+        } else {
+            history.push('/');
+        }
+        
+        });
     //states
     const[isVideo,setIsVideo]=useState(location.state.currentVideoState);
     const[isMic,setIsMic]=useState(location.state.currentAudioState);
