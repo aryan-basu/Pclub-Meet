@@ -36,9 +36,15 @@ const Preview = (props) => {
 
     //firebase
     var user = firebase.auth().currentUser;
-    if (user === null) {
-        history.push('/');
-    }
+  firebase.auth().onAuthStateChanged(function(user) {
+
+        if(user) {
+           //Here you can place the code that you want to run if the user is logged in
+        } else {
+            history.push('/');
+        }
+        
+        });
 
     //audio
     const handleAudioClick = () => {
