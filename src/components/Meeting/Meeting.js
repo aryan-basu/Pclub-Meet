@@ -17,8 +17,9 @@ const Meeting = (props) => {
         history.push('/');
     }
     //states
-    const[isVideo,setIsVideo]=useState(true);
-    const[isMic,setIsMic]=useState(true);
+    const[isVideo,setIsVideo]=useState(location.state.currentVideoState);
+    const[isMic,setIsMic]=useState(location.state.currentAudioState);
+
     const [peers, setPeers] = useState({})
 
     const [myId, setMyId] = useState('');
@@ -44,6 +45,7 @@ const Meeting = (props) => {
   }
     //audio
     const handleAudioClick = () => {
+        
        setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
