@@ -151,7 +151,7 @@ const Meeting = (props) => {
             // host: 'localhost',
             // port: '5000',
             path: '/peerjs',
-            // secure: true
+            secure: true
         })
 
         navigator.mediaDevices.getUserMedia({
