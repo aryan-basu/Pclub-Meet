@@ -8,6 +8,10 @@ import { Input, InputAdornment, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 const Meeting = (props) => {
 
+
+    // const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
+    const socket = io("localhost:5000/"); //initializing socket 
+
     //firebase
     const history = useHistory();
     const location = useLocation();
@@ -26,6 +30,8 @@ const Meeting = (props) => {
     myVideo.muted = true; //important
 
     let messages = useRef()
+    const [message, setMessage] = useState("")
+
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
@@ -117,8 +123,6 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
-        // const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
-        const socket = io("localhost:5000/"); //initializing socket 
         const myPeer = new Peer(undefined, { // initialzing my peer object
             // host: 'pclub-meet-backend.herokuapp.com',
             host: 'localhost',
@@ -129,8 +133,8 @@ const Meeting = (props) => {
         })
 
         navigator.mediaDevices.getUserMedia({
-            audio : true,
-            video : true,
+            audio: true,
+            video: true,
         }).then(stream => {
 
             stream.getAudioTracks()[0].enabled = location.state.currentAudioState;
@@ -172,51 +176,89 @@ const Meeting = (props) => {
 
     }, [])
 
-    const createMessageElement = (myPeer, socket) => {
 
-        io.on("createMessage", (message, userId) => {
-            messages.innerHTML = messages.innerHTML +
-                `<div class="message">
-                  <b><i class="far fa-user-circle"></i> <span> ${userId === user ? "me" : userId}</span></b>
-                  <span>${message}</span>
-              </div>`;
-        });
+    // useEffect(() => {
+    //     socket.on("message", (message, userid) => {
+    //         const ans = message;
+    //         let temp = messages;
+    //         temp.push({
+    //              userId: data.userId,
+    //              username: data.username,
+    //              text: ans,
+    //         });
+    //         setMessages([...temp]);
+    //     });
+    // }, [socket]);
+
+    const addMessageElement = (message, userId) => {
+        const msg = document.createElement('div')
+        msg.innerHTML =
+            `<article className="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
+                    <div className="msg-box">
+                        <div className="flr">
+                            <div className="messages">
+                                <p className="msg" id="msg-1">
+                                ${message}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>`;
+        // if(message.current)
+        messages.current.append(msg);
     }
 
 
+    const sendMessage = (myPeer, socket) => {
+
+        socket.on("createMessage", (message, userId) => {
+            addMessageElement(message, userId)
+
+        });
+    }
+
+    const setMessageText = (event) => {
+        setMessage(event.target.value)
+    }
 
     return (
-        <div class="main" >
-            {/* <div class="main__right">
-                <div id='main__chat_window'>
-                    <div className="messages"></div>
-                </div>
-                <div class="main__message_container">
-                    <Input id="chat_message" autocomplete="off" placeholder="Type message here..."
-                        endAdornment={
-                            <InputAdornment position="end" >
-                                <IconButton id='send'> <SendIcon /></IconButton>
-                            </InputAdornment>}
-                    />
-                </div>
-            </div> */}
-            <div id='chats'>
-                <div className="">
-                    <div className="messages" ref={messages}>
 
-                    </div>
-                    {/* <Input class='chat-input' autocomplete="off" placeholder="Type message here..."
-                        endAdornment={<IconButton id='send'> <SendIcon /></IconButton>}
-                    /> */}
-                    <div class="main__message_container">
-                        <input id="chat-input" type="text" autocomplete="off" placeholder="Type message here..." />
-                        <div id="send" class="options__button">
-                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        <div class="main" >
+            <div className="body" >
+                <section className="chatbox">
+                    <section className="chat-window">
+                        <div useRef={messages}>
+                            <article className="msg-container msg-self" id="msg-0">
+                                <div className="msg-box">
+                                    <div className="flr">
+                                        <div className="messages">
+                                            <p className="msg" id="msg-0">
+                                                Lorem ipsum
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="video-chat-area" >
+                    </section>
+                    <form className="chat-input" >
+                        <input
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Type a message..."
+                            onChange={setMessageText}
+                        />
+
+                        <IconButton id='send' onClick={sendMessage}>
+                            <SendIcon />
+                        </IconButton>
+                    </form>
+                </section>
+            </div >
+
+
+
+            <div className="video-chat-area" >
                 <div id="video-grid" ref={videoGrid} >
 
                 </div>
