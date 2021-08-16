@@ -8,18 +8,24 @@ import { Input, InputAdornment, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 const Meeting = (props) => {
 
-
-    // const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
-    const socket = io("localhost:5000/"); //initializing socket 
-
+    const socket = io("localhost:5000/");
     //firebase
     const history = useHistory();
     const location = useLocation();
     var user = firebase.auth().currentUser;
-    if (user === null) {
-        history.push('/');
-    }
+    firebase.auth().onAuthStateChanged(function (user) {
+
+        if (user) {
+            //Here you can place the code that you want to run if the user is logged in
+        } else {
+            history.push('/');
+        }
+
+    });
     //states
+    const [isVideo, setIsVideo] = useState(location.state.currentVideoState);
+    const [isMic, setIsMic] = useState(location.state.currentAudioState);
+
     const [peers, setPeers] = useState({})
     const [myId, setMyId] = useState('');
     const [stream, setStream] = useState();
@@ -43,11 +49,17 @@ const Meeting = (props) => {
             videoGrid.current.append(video);
         }
     }
+    // const handleDisconnect = () => {
+    //     history.push('/meetend');
+    // }
     const handleDisconnect = () => {
+        firebase.auth().signOut();
         history.push('/meetend');
     }
     //audio
     const handleAudioClick = () => {
+
+        setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
@@ -63,6 +75,7 @@ const Meeting = (props) => {
 
     //video
     const handleVideoClick = () => {
+        setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
         if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
@@ -270,9 +283,11 @@ const Meeting = (props) => {
                     <i class="fas fa-ellipsis-h media-icon two"></i>
                 </div>
                 <div class='mute'>
-                    <i class="far fa-microphone media-icon three" onClick={handleAudioClick} ></i>
+                    <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
+
                     <i class="far fa-phone media-icon four" onClick={handleDisconnect}></i>
-                    <i class="far fa-video media-icon five" onClick={handleVideoClick} ></i>
+                    <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
+
                 </div>
                 <div>
                     <i class="fas fa-user-friends media-icon six"></i>

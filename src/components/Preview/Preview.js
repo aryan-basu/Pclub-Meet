@@ -4,8 +4,8 @@ import './Preview.css'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
-import { BiMicrophone } from 'react-icons/bi'
-import { IoVideocamOutline } from 'react-icons/io5'
+// import { BiMicrophone } from 'react-icons/bi'
+// import { IoVideocamOutline } from 'react-icons/io5'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
@@ -30,33 +30,45 @@ const Preview = (props) => {
     //states of audio & video
     const [audioState, setAudioState] = useState(true);
     const [videoState, setVideoState] = useState(true);
+    const [isVideo, setIsVideo] = useState(true);
+    const [isMic, setIsMic] = useState(true);
 
 
     //firebase
     var user = firebase.auth().currentUser;
-    if (user === null) {
-        history.push('/');
-    }
+    firebase.auth().onAuthStateChanged(function (user) {
+
+        if (user) {
+            //Here you can place the code that you want to run if the user is logged in
+        } else {
+            history.push('/');
+        }
+
+    });
 
     //audio
     const handleAudioClick = () => {
+        setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
             console.log('mic disabled')
+
             //render html
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
             console.log('mic enabled')
+
             //render html
         }
     }
 
     //video
     const handleVideoClick = () => {
+        setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
         if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
@@ -133,12 +145,14 @@ const Preview = (props) => {
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
-                        <IconButton size="medium" className='preview-icon' onClick={handleAudioClick} >
-                            <BiMicrophone />
-                        </IconButton>
-                        <IconButton size="medium" className='preview-icon' onClick={handleVideoClick} >
+                        <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
+                        {/*<IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
+                            <BiMicrophone />  
+                        </IconButton> 
+                        <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
                             <IoVideocamOutline />
-                        </IconButton>
+                        </IconButton> */}
+                        <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
                 <Input type="text" variant="filled" className='username' placeholder='Add Username' />
