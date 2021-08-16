@@ -4,11 +4,11 @@ import Peer from 'peerjs';
 import { io } from 'socket.io-client';
 import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Input, InputAdornment, IconButton } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+
+
 const Meeting = (props) => {
 
-    const socket = io("localhost:5000/");
+
     //firebase
     const history = useHistory();
     const location = useLocation();
@@ -27,6 +27,7 @@ const Meeting = (props) => {
     const [isMic, setIsMic] = useState(location.state.currentAudioState);
 
     const [peers, setPeers] = useState({})
+
     const [myId, setMyId] = useState('');
     const [stream, setStream] = useState();
 
@@ -34,10 +35,6 @@ const Meeting = (props) => {
     const videoGrid = useRef();
     const myVideo = document.createElement('video')
     myVideo.muted = true; //important
-
-    let messages = useRef()
-    const [message, setMessage] = useState("")
-
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
@@ -49,9 +46,6 @@ const Meeting = (props) => {
             videoGrid.current.append(video);
         }
     }
-    // const handleDisconnect = () => {
-    //     history.push('/meetend');
-    // }
     const handleDisconnect = () => {
         firebase.auth().signOut();
         history.push('/meetend');
@@ -136,11 +130,10 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
+        const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
         const myPeer = new Peer(undefined, { // initialzing my peer object
-            // host: 'pclub-meet-backend.herokuapp.com',
-            host: 'localhost',
-            // port: '443',
-            port: '5000',
+            host: 'pclub-meet-backend.herokuapp.com',
+            port: '443',
             path: '/peerjs',
             secure: true
         })
@@ -170,7 +163,7 @@ const Meeting = (props) => {
             })
 
             socket.on('user-connected', userId => {
-                if (userId !== myId) {
+                if (userId != myId) {
                     // user is joining
                     setTimeout(() => {
                         // user joined
@@ -189,94 +182,13 @@ const Meeting = (props) => {
 
     }, [])
 
-
-    // useEffect(() => {
-    //     socket.on("message", (message, userid) => {
-    //         const ans = message;
-    //         let temp = messages;
-    //         temp.push({
-    //              userId: data.userId,
-    //              username: data.username,
-    //              text: ans,
-    //         });
-    //         setMessages([...temp]);
-    //     });
-    // }, [socket]);
-
-    const addMessageElement = (message, userId) => {
-        const msg = document.createElement('div')
-        msg.innerHTML =
-            `<article className="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
-                    <div className="msg-box">
-                        <div className="flr">
-                            <div className="messages">
-                                <p className="msg" id="msg-1">
-                                ${message}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </article>`;
-        // if(message.current)
-        messages.current.append(msg);
-    }
-
-
-    const sendMessage = (myPeer, socket) => {
-
-        socket.on("createMessage", (message, userId) => {
-            addMessageElement(message, userId)
-
-        });
-    }
-
-    const setMessageText = (event) => {
-        setMessage(event.target.value)
-    }
-
     return (
-
         <div class="main" >
-            <div className="body" >
-                <section className="chatbox">
-                    <section className="chat-window">
-                        <div useRef={messages}>
-                            <article className="msg-container msg-self" id="msg-0">
-                                <div className="msg-box">
-                                    <div className="flr">
-                                        <div className="messages">
-                                            <p className="msg" id="msg-0">
-                                                Lorem ipsum
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-                    <form className="chat-input" >
-                        <input
-                            type="text"
-                            autocomplete="off"
-                            placeholder="Type a message..."
-                            onChange={setMessageText}
-                        />
-
-                        <IconButton id='send' onClick={sendMessage}>
-                            <SendIcon />
-                        </IconButton>
-                    </form>
-                </section>
-            </div >
-
-
-
-            <div className="video-chat-area" >
+            <div class="video-chat-area" >
                 <div id="video-grid" ref={videoGrid} >
 
                 </div>
             </div>
-
             <nav class="bottom-nav" >
                 <div>
                     <i class="fas fa-hand-paper media-icon one" ></i>
@@ -295,7 +207,7 @@ const Meeting = (props) => {
                 </div>
             </nav>
 
-        </div >
+        </div>
     );
 }
 
