@@ -41,6 +41,7 @@ const Meeting = (props) => {
         } 
     }
   const handleDisconnect=()=>{
+    firebase.auth().signOut();
     history.push('/meetend');
   }
     //audio
