@@ -35,7 +35,7 @@ const Preview = (props) => {
 
 
     //firebase
-    var user = firebase.auth().currentUser;
+    // var user = firebase.auth().currentUser;
     firebase.auth().onAuthStateChanged(function (user) {
 
         if (user) {
@@ -117,6 +117,7 @@ const Preview = (props) => {
         // const videoButton = document.querySelector('#videoButton')
         // videoButton.addEventListener('click', () => console.log('clicked'))
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // passing location here ALERT
 
 
@@ -130,7 +131,7 @@ const Preview = (props) => {
             pathname: newPath,
             state: {
                 currentAudioState: audioState,
-                currentVideoState: videoState
+                currentVideoState: videoState,
             }
         })
     }
