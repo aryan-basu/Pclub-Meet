@@ -6,7 +6,17 @@ import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+
+const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket (important)
+
 const Meeting = (props) => {
+
+    const myPeer = new Peer(undefined, { // initialzing my peer object
+        host: 'pclub-meet-backend.herokuapp.com',
+        port: '443',
+        path: '/peerjs',
+        secure: true
+    })
 
     //firebase
     const history = useHistory();
@@ -37,7 +47,6 @@ const Meeting = (props) => {
 
     const messages = useRef()
     const [message, setMessage] = useState("")
-    const [sckt, setSckt] = useState(null)
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
@@ -49,10 +58,11 @@ const Meeting = (props) => {
             videoGrid.current.append(video);
         }
     }
+
     const handleDisconnect = () => {
-        firebase.auth().signOut();
-        history.push('/meetend');
+        
     }
+
     //audio
     const handleAudioClick = () => {
 
@@ -84,7 +94,7 @@ const Meeting = (props) => {
         }
     }
 
-    const connectToNewUser = (userId, stream, myPeer) => {
+    const connectToNewUser = (userId, stream) => {
         const call = myPeer.call(userId, stream)
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
@@ -97,7 +107,7 @@ const Meeting = (props) => {
         peers[userId] = call
     }
 
-    const initializePeerEvents = (myPeer, socket) => {
+    const initializePeerEvents = () => {
 
         myPeer.on('open', id => {
             setMyId(id);
@@ -110,7 +120,7 @@ const Meeting = (props) => {
         })
     }
 
-    const initializeSocketEvents = (socket) => {
+    const initializeSocketEvents = () => {
 
         socket.on('connect', () => {
             console.log('socket-connected');
@@ -131,28 +141,15 @@ const Meeting = (props) => {
         })
     }
 
-    const handleEnterKey = (e) => {
+    const handleEnterKey = (e)
         // console.log(e, message)
         if (e.key === "Enter" && message.length !== 0) {
-            sckt.emit("message", message)
+            socket.emit("message", message)
             setMessage("")
         }
     };
 
     useEffect(() => {
-
-        const socket = io("http://pclub-meet-backend.herokuapp.com/");
-        // const socket = io("localhost:5000/");
-        console.log(socket)
-        setSckt(socket)
-        const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'pclub-meet-backend.herokuapp.com',
-            port: '443',
-            // host: 'localhost',
-            // port: '5000',
-            path: '/peerjs',
-            secure: true
-        })
 
         navigator.mediaDevices.getUserMedia({
             audio: true,
@@ -183,7 +180,7 @@ const Meeting = (props) => {
                     // user is joining
                     setTimeout(() => {
                         // user joined
-                        connectToNewUser(userId, stream, myPeer)
+                        connectToNewUser(userId, stream)
                     }, 1000)
                 }
             });
@@ -199,12 +196,11 @@ const Meeting = (props) => {
         })
 
         //socket.on('user-disconnected)
-        initializeSocketEvents(socket);
+        initializeSocketEvents();
 
         //myPeer.on('open')
-        initializePeerEvents(myPeer, socket);
+        initializePeerEvents();
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addMessageElement = (message, userId, id) => {
@@ -228,7 +224,7 @@ const Meeting = (props) => {
 
     const sendMessage = () => {
         if (message !== null)
-            sckt.emit("message", message, myId)
+            socket.emit("message", message, myId)
         setMessage("")
     }
 
