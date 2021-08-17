@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
 
-const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket 
+const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket (important)
 
 const Meeting = (props) => {
 
