@@ -4,8 +4,8 @@ import './Preview.css'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
-import { BiMicrophone } from 'react-icons/bi'
-import { IoVideocamOutline } from 'react-icons/io5'
+// import { BiMicrophone } from 'react-icons/bi'
+// import { IoVideocamOutline } from 'react-icons/io5'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
@@ -26,36 +26,42 @@ const Preview = (props) => {
     const [roomId, setroomId] = useState('');
     const myVideo = useRef()
     //stream
-    const [stream,setStream] = useState();
+    const [stream, setStream] = useState();
     //states of audio & video
-    const [audioState,setAudioState] = useState(true);
-    const [videoState,setVideoState] = useState(true);
-    const[isVideo,setIsVideo]=useState(true);
-    const[isMic,setIsMic]=useState(true);
+    const [audioState, setAudioState] = useState(true);
+    const [videoState, setVideoState] = useState(true);
+    const [isVideo, setIsVideo] = useState(true);
+    const [isMic, setIsMic] = useState(true);
 
 
     //firebase
-    var user = firebase.auth().currentUser;
-    if (user === null) {
-        history.push('/');
-    }
+    // var user = firebase.auth().currentUser;
+    firebase.auth().onAuthStateChanged(function (user) {
+
+        if (user) {
+            //Here you can place the code that you want to run if the user is logged in
+        } else {
+            history.push('/');
+        }
+
+    });
 
     //audio
     const handleAudioClick = () => {
         setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
-        if( enabled ){
+        if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
             console.log('mic disabled')
-           
+
             //render html
         }
-        else{
+        else {
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
             console.log('mic enabled')
-       
+
             //render html
         }
     }
@@ -64,12 +70,12 @@ const Preview = (props) => {
     const handleVideoClick = () => {
         setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
-        if( enabled ){
+        if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
             setVideoState(false)
             //render html
         }
-        else{
+        else {
             stream.getVideoTracks()[0].enabled = true;
             setVideoState(true)
             //render html
@@ -90,18 +96,18 @@ const Preview = (props) => {
         })
 
 
-        if ( location.state.isInitiator ) {
+        if (location.state.isInitiator) {
 
             Axios.get('https://pclub-meet-backend.herokuapp.com/join').then(res => {
                 setroomId(res.data.link)
                 const inputLink = document.getElementById('input-with-icon-adornment text')
                 inputLink.value = res.data.link
             })
-            .catch((err) => console.log(err))
+                .catch((err) => console.log(err))
 
         }
 
-        else{
+        else {
             setroomId(location.state.roomId)
             const inputLink = document.getElementById('input-with-icon-adornment text')
             inputLink.value = location.state.roomId
@@ -110,6 +116,7 @@ const Preview = (props) => {
         // const videoButton = document.querySelector('#videoButton')
         // videoButton.addEventListener('click', () => console.log('clicked'))
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // passing location here ALERT
 
 
@@ -122,15 +129,15 @@ const Preview = (props) => {
         history.push({
             pathname: newPath,
             state: {
-                currentAudioState : audioState,
-                currentVideoState : videoState
+                currentAudioState: audioState,
+                currentVideoState: videoState
             }
         })
     }
 
     return (
         <div>
-             <Header/>
+            <Header />
             <div className="preview-main">
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>
@@ -138,14 +145,14 @@ const Preview = (props) => {
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
-                    <i  onClick={handleAudioClick} className={`${isMic ?'far fa-microphone media-icon three':'far fa-microphone-slash media-icon three'}`} ></i>
+                        <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
                         {/*<IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
                             <BiMicrophone />  
                         </IconButton> 
                         <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
                             <IoVideocamOutline />
                         </IconButton> */}
-                        <i onClick={handleVideoClick}className={`${isVideo?'far fa-video media-icon five':'far fa-video-slash media-icon five'}`}></i>
+                        <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
                 <Input type="text" variant="filled" className='username' placeholder='Add Username' />

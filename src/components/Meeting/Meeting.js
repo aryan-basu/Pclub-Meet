@@ -4,6 +4,8 @@ import Peer from 'peerjs';
 import { io } from 'socket.io-client';
 import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
+import { IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket (important)
 
@@ -19,7 +21,7 @@ const Meeting = (props) => {
     //firebase
     const history = useHistory();
     const location = useLocation();
-    var user = firebase.auth().currentUser;
+    // var user = firebase.auth().currentUser;
     firebase.auth().onAuthStateChanged(function (user) {
 
         if (user) {
@@ -42,6 +44,9 @@ const Meeting = (props) => {
     const videoGrid = useRef();
     const myVideo = document.createElement('video')
     myVideo.muted = true; //important
+
+    const messages = useRef()
+    const [message, setMessage] = useState("")
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
@@ -136,9 +141,16 @@ const Meeting = (props) => {
         })
     }
 
+    const handleEnterKey = (e)
+        // console.log(e, message)
+        if (e.key === "Enter" && message.length !== 0) {
+            socket.emit("message", message)
+            setMessage("")
+        }
+    };
+
     useEffect(() => {
 
-         
         navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true,
@@ -164,11 +176,19 @@ const Meeting = (props) => {
             })
 
             socket.on('user-connected', userId => {
-                if (userId != myId) {
+                if (userId !== myId) {
                     // user is joining
                     setTimeout(() => {
                         // user joined
                         connectToNewUser(userId, stream)
+                    }, 1000)
+                }
+            });
+
+            socket.on("createMessage", (message, userId) => {
+                if (message !== "") {
+                    setTimeout(() => {
+                        addMessageElement(message, userId, myId)
                     }, 1000)
                 }
             });
@@ -183,28 +203,85 @@ const Meeting = (props) => {
 
     }, [])
 
+    const addMessageElement = (message, userId, id) => {
+        console.log(id, userId)
+        const msg = document.createElement('div')
+        msg.innerHTML =
+            `<article class="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
+                    <div class="msg-box">
+                        <div class="flr">
+                            <div class="messages">
+                                <p class="msg" id="msg-1">
+                                ${userId}: ${message}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>`;
+        // if(message.current)
+        messages.current.append(msg);
+    }
+
+    const sendMessage = () => {
+        if (message !== null)
+            socket.emit("message", message, myId)
+        setMessage("")
+    }
+
+    const setMessageText = (event) => {
+        setMessage(event.target.value)
+    }
+
     return (
-        <div class="main" >
-            <div class="video-chat-area" >
+
+        <div className="main" >
+            <div className="body" >
+                <section className="chatbox">
+                    <section className="chat-window">
+                        <div ref={messages}>
+
+                        </div>
+                    </section>
+                    <div className="chat-input" >
+                        <input
+                            type="text"
+                            autoComplete="off"
+                            placeholder="Type a message..."
+                            onChange={setMessageText}
+                            value={message}
+                            onKeyPress={handleEnterKey}
+                        />
+
+                        <IconButton id='send' onClick={sendMessage}>
+                            <SendIcon />
+                        </IconButton>
+                    </div>
+                </section>
+            </div >
+
+
+
+            <div className="video-chat-area" >
                 <div id="video-grid" ref={videoGrid} >
 
                 </div>
             </div>
-            <nav class="bottom-nav" >
+
+            <nav className="bottom-nav" >
                 <div>
-                    <i class="fas fa-hand-paper media-icon one" ></i>
-                    <i class="fas fa-ellipsis-h media-icon two"></i>
+                    <i className="fas fa-hand-paper media-icon one" ></i>
+                    <i className="fas fa-ellipsis-h media-icon two"></i>
                 </div>
-                <div class='mute'>
+                <div className='mute'>
                     <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
 
-                    <i class="far fa-phone media-icon four" onClick={handleDisconnect}></i>
+                    <i className="far fa-phone media-icon four" onClick={handleDisconnect}></i>
                     <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
 
                 </div>
                 <div>
-                    <i class="fas fa-user-friends media-icon six"></i>
-                    <i class="far fa-comment-alt media-icon seven"></i>
+                    <i className="fas fa-user-friends media-icon six"></i>
+                    <i className="far fa-comment-alt media-icon seven"></i>
                 </div>
             </nav>
 
