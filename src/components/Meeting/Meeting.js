@@ -141,7 +141,7 @@ const Meeting = (props) => {
         })
     }
 
-    const handleEnterKey = (e)
+    const handleEnterKey = (e) => {
         // console.log(e, message)
         if (e.key === "Enter" && message.length !== 0) {
             socket.emit("message", message)
@@ -287,6 +287,7 @@ const Meeting = (props) => {
 
         </div>
     );
+
 }
 
 export default Meeting;
