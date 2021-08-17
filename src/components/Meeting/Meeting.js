@@ -5,9 +5,16 @@ import { io } from 'socket.io-client';
 import firebase from 'firebase';
 import { useHistory, useLocation } from 'react-router-dom';
 
+const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket 
 
 const Meeting = (props) => {
 
+    const myPeer = new Peer(undefined, { // initialzing my peer object
+        host: 'pclub-meet-backend.herokuapp.com',
+        port: '443',
+        path: '/peerjs',
+        secure: true
+    })
 
     //firebase
     const history = useHistory();
@@ -46,10 +53,11 @@ const Meeting = (props) => {
             videoGrid.current.append(video);
         }
     }
+
     const handleDisconnect = () => {
-        firebase.auth().signOut();
-        history.push('/meetend');
+        
     }
+
     //audio
     const handleAudioClick = () => {
 
@@ -81,7 +89,7 @@ const Meeting = (props) => {
         }
     }
 
-    const connectToNewUser = (userId, stream, myPeer) => {
+    const connectToNewUser = (userId, stream) => {
         const call = myPeer.call(userId, stream)
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
@@ -94,7 +102,7 @@ const Meeting = (props) => {
         peers[userId] = call
     }
 
-    const initializePeerEvents = (myPeer, socket) => {
+    const initializePeerEvents = () => {
 
         myPeer.on('open', id => {
             setMyId(id);
@@ -107,7 +115,7 @@ const Meeting = (props) => {
         })
     }
 
-    const initializeSocketEvents = (socket) => {
+    const initializeSocketEvents = () => {
 
         socket.on('connect', () => {
             console.log('socket-connected');
@@ -130,14 +138,7 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
-        const socket = io("https://pclub-meet-backend.herokuapp.com/"); //initializing socket 
-        const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'pclub-meet-backend.herokuapp.com',
-            port: '443',
-            path: '/peerjs',
-            secure: true
-        })
-
+         
         navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true,
@@ -167,7 +168,7 @@ const Meeting = (props) => {
                     // user is joining
                     setTimeout(() => {
                         // user joined
-                        connectToNewUser(userId, stream, myPeer)
+                        connectToNewUser(userId, stream)
                     }, 1000)
                 }
             });
@@ -175,10 +176,10 @@ const Meeting = (props) => {
         })
 
         //socket.on('user-disconnected)
-        initializeSocketEvents(socket);
+        initializeSocketEvents();
 
         //myPeer.on('open')
-        initializePeerEvents(myPeer, socket);
+        initializePeerEvents();
 
     }, [])
 
