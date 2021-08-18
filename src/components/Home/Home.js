@@ -4,6 +4,7 @@ import './Home.css'
 import InputAdornment from '@material-ui/core/InputAdornment'
 // import { AiOutlineArrowRight } from 'react-icons/ai'
 import Button from '@material-ui/core/Button'
+
 // import IconButton from '@material-ui/core/IconButton'
 import { RiAddBoxLine } from 'react-icons/ri'
 import { useHistory } from 'react-router-dom';
@@ -55,10 +56,10 @@ const Home = (props) => {
         <div>
             <Header />
             <div className="home">
-                <h4>Welcome {fullname} !</h4>
+                <h2>Welcome {fullname} !</h2>
 
-                <input type="text" ref={textInput} placeholder="Enter Meeting code" />
-                <button onClick={handlejoin}>Join meet</button>
+                <input type="text" ref={textInput} placeholder="Enter Meeting code"></input>
+                <Button onClick={handlejoin} className="btn">Join meet</Button>
                 <div className='lines'>
                     <div className='line-1'></div>
                     <p>or</p>

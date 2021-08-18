@@ -17,7 +17,12 @@
     height: 1px;
     background: #000;
 }
-
+input {
+    width: 60%;
+    padding: 7px 14px;
+    margin-right: 1rem;
+    box-sizing: border-box; 
+  }
 .input-btn {
     background: #37AF4B!important;
     color: white!important;
@@ -28,7 +33,10 @@
 .input-icons {
     font-size: 1rem;
 }
-
+.mt-2{
+margin-top: 0.4rem !important;
+padding-top: 2rem;
+}
 .btn-meet {
     display: flex;
     align-items: center;
@@ -42,4 +50,9 @@
     font-size: 1rem;
     font-weight: bold!important;
  
+}
+
+.btn {
+    color: #fff!important;
+    background: #37AF4B!important;
 }

@@ -160,7 +160,16 @@ video {
   justify-content: space-between;
   align-items: center;
 }
+.fa-phone:hover{
+ background-color: red;
+}
+.fa-microphone:hover{
+  background-color: red !important;
 
+}
+.fa-video:hover{
+  background-color: red;
+}
 .MuiTab-textColorPrimary.Mui-selected {
   color: #37af4b !important;
 }

@@ -139,7 +139,7 @@ const Preview = (props) => {
         <div>
             <Header />
             <div className="preview-main">
-                <h1 className='heading'>Room #1</h1>
+              {/*  <h1 className='heading'>Room #1</h1> */}
                 <Card className='card'>
                     <CardContent className='video'>
                         <video autoPlay muted ref={myVideo} />

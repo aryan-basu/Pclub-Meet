@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button'
 // import Button from '@material-ui/core/Button'
 import '../Home/Home.css'
 import Header from '../Header/Header';
@@ -14,7 +15,7 @@ const Meetend = () => {
             <div className="home">
                 <h1>You left the meeting.</h1>
 
-                <button classname="input-btn" onClick={handleback}>Back To Home screen</button>
+                <Button className="btn" onClick={handleback}>Back To Home screen</Button>
 
             </div>
         </div>
