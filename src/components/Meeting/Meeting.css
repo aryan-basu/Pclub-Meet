@@ -45,21 +45,34 @@ html {
   width: 375px;
   height: 660px;
   /* max-height: 400px; */
+  background-color: white;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 .chat-window {
   flex: auto;
+
   max-height: calc(100% - 60px);
-  background: #2f323b;
+  background: #ffffff;
   overflow: auto;
+}
+.chatname{
+  border-bottom: 2px solid #37AF4B;
+  height: 44px;
+  color: #37AF4B;
+ 
+}
+.chatname.h2{
+  margin-left: 2rem;
 }
 .chat-input {
   flex: 0 0 auto;
-  height: 60px;
-  background: #40434e;
-  border-top: 1px solid #2671ff;
+  height: 64px;
+background-color:#37AF4B;
+  /*background: #40434e;  */
+  border-top: 2px solid #37AF4B;
+  
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
 }
 .chat-input input {
@@ -68,11 +81,12 @@ html {
   outline: 0 none;
   border: none;
   width: calc(100% - 60px);
-  color: white;
+  color: rgb(19, 18, 18);
   text-indent: 10px;
   font-size: 12pt;
   padding: 0;
-  background: #40434e;
+background-color: white;
+  /*background: #40434e;  */
 }
 .msg-container {
   position: relative;
@@ -83,7 +97,8 @@ html {
 }
 .msg-box {
   display: flex;
-  background: #5b5e6c;
+  background: #37AF4B;
+ /* background: #5b5e6c; */
   padding: 10px 10px 0 10px;
   border-radius: 0 6px 6px 0;
   max-width: 80%;
@@ -103,7 +118,8 @@ html {
   display: inline-block;
   font-size: 11pt;
   line-height: 13pt;
-  color: rgba(255, 255, 255, 0.7);
+color: white;
+ /* color: rgba(255, 255, 255, 0.7); */
   margin: 0 0 4px 0;
 }
 .msg:first-of-type {
@@ -111,7 +127,7 @@ html {
 }
 .msg-self .msg-box {
   border-radius: 6px 0 0 6px;
-  background: #2671ff;
+  background: #34ff3e;
   float: right;
 }
 .msg-self .msg {
@@ -119,7 +135,8 @@ html {
 }
 
 #send {
-  color: #37af4b;
+  padding-left: 1.2rem;
+  color: white;
 }
 
 video {

@@ -299,6 +299,7 @@ const Meeting = (props) => {
         <div className="main" >
             <div className="body" >
                 <section className="chatbox">
+                    <h2 className="chatname">Chat</h2>
                     <section className="chat-window">
                         <div ref={messages}>
 
