@@ -218,10 +218,11 @@ const Meeting = (props) => {
             socket.on('user-connected', userId => {
                 if (userId !== myId) {
                     // user is joining
-                    setTimeout(() => {
-                        // user joined
-                        connectToNewUser(userId, stream, myPeer)
-                    }, 1000)
+                    // setTimeout(() => {
+                    //     // user joined
+                        
+                    // }, 1000)
+                    connectToNewUser(userId, stream, myPeer)
                 }
             });
 
