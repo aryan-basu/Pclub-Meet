@@ -144,7 +144,7 @@ const Meeting = (props) => {
             console.log('socket-error');
         })
     }
-
+/*
     const handleEnterKey = (e) => {
         // console.log(e, message)
         if (e.key === "Enter" && message.length !== 0) {
@@ -152,7 +152,7 @@ const Meeting = (props) => {
             setMessage("")
         }
     };
-
+*/
     const removeVideo = (id) => {
         const video = document.getElementById(id);
         if (video) video.remove();
@@ -249,7 +249,7 @@ const Meeting = (props) => {
 
     }, [])
 
-    const addMessageElement = (message, userId, id) => {
+   /* const addMessageElement = (message, userId, id) => {
         console.log(id, userId)
         const msg = document.createElement('div')
         msg.innerHTML =
@@ -267,12 +267,13 @@ const Meeting = (props) => {
         // if(message.current)
         messages.current.append(msg);
     }
+ 
+    */
 
-
-
+/*
     const setMessageText = (event) => {
         setMessage(event.target.value)
-    }
+    } */
 
     function sendMessage() {
         // var msg = document.getElementById('message').value;
