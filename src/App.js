@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, BrowserRouter } from "react-router-dom";
-import Header from './components/Header/Header';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import Header from './components/Header/Header';
 import Signin from './components/Login/Signin'
 import Signup from './components/Signup/Signup';
 import Meetend from './components/Meetend/Meetend';

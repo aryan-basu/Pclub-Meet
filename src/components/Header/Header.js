@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { IoMdPerson } from 'react-icons/io';
 import Logo from '../assets/images/Logo.png';
 
-import firebase from 'firebase';
-import { useHistory } from 'react-router-dom';
+// import firebase from 'firebase';
+// import { useHistory } from 'react-router-dom';
 
 const Header = ({currentUser}) => {
 
