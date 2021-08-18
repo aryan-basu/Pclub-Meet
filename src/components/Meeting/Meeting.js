@@ -21,7 +21,7 @@ const Meeting = (props) => {
     //firebase
     const history = useHistory();
     const location = useLocation();
-    // var user = firebase.auth().currentUser;
+    var abc = firebase.auth().currentUser;
     firebase.auth().onAuthStateChanged(function (user) {
 
         if (user) {
@@ -60,7 +60,7 @@ const Meeting = (props) => {
     }
 
     const handleDisconnect = () => {
-        
+
     }
 
     //audio
@@ -107,6 +107,7 @@ const Meeting = (props) => {
         peers[userId] = call
     }
 
+
     const initializePeerEvents = () => {
 
         myPeer.on('open', id => {
@@ -141,13 +142,7 @@ const Meeting = (props) => {
         })
     }
 
-    const handleEnterKey = (e) => {
-        // console.log(e, message)
-        if (e.key === "Enter" && message.length !== 0) {
-            socket.emit("message", message)
-            setMessage("")
-        }
-    };
+
 
     useEffect(() => {
 
@@ -178,21 +173,32 @@ const Meeting = (props) => {
             socket.on('user-connected', userId => {
                 if (userId !== myId) {
                     // user is joining
-                    setTimeout(() => {
-                        // user joined
-                        connectToNewUser(userId, stream)
-                    }, 1000)
+                    // setTimeout(() => {
+                    // user joined
+                    connectToNewUser(userId, stream)
+                    // }, 1000)
                 }
             });
 
-            socket.on("createMessage", (message, userId) => {
-                if (message !== "") {
-                    setTimeout(() => {
-                        addMessageElement(message, userId, myId)
-                    }, 1000)
-                }
-            });
+            socket.on('newmsg', function (data) {
+                // client side data fetch
+                console.log(data.user, data.message);
+                const msg = document.createElement('div')
+                msg.innerHTML =
+                    `<article class="msg-container msg-remote" id="msg-0">
+                              <div class="msg-box">
+                                  <div class="flr">
+                                      <div class="messages">
+                                          <p class="msg" id="msg-1">
+                                          ${data.user}: ${data.message}
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </article>`;
+                messages.current.append(msg);
 
+            });
         })
 
         //socket.on('user-disconnected)
@@ -203,31 +209,21 @@ const Meeting = (props) => {
 
     }, [])
 
-    const addMessageElement = (message, userId, id) => {
-        console.log(id, userId)
-        const msg = document.createElement('div')
-        msg.innerHTML =
-            `<article class="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
-                    <div class="msg-box">
-                        <div class="flr">
-                            <div class="messages">
-                                <p class="msg" id="msg-1">
-                                ${userId}: ${message}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </article>`;
-        // if(message.current)
-        messages.current.append(msg);
+    function sendMessage() {
+        // var msg = document.getElementById('message').value;
+        // console.log(msg);
+        if (message) {
+            socket.emit('msg', { message, user: abc.displayName });
+            setMessage("")
+        }
     }
-
-    const sendMessage = () => {
-        if (message !== null)
-            socket.emit("message", message, myId)
-        setMessage("")
-    }
-
+    const handleEnterKey = (e) => {
+        // var msg = document.getElementById('message').value;
+        if (e.key === "Enter" && message.length !== 0) {
+            socket.emit('msg', { message, user: abc.displayName });
+            setMessage("")
+        }
+    };
     const setMessageText = (event) => {
         setMessage(event.target.value)
     }
@@ -245,6 +241,7 @@ const Meeting = (props) => {
                     <div className="chat-input" >
                         <input
                             type="text"
+                            // id='message'
                             autoComplete="off"
                             placeholder="Type a message..."
                             onChange={setMessageText}
@@ -258,8 +255,6 @@ const Meeting = (props) => {
                     </div>
                 </section>
             </div >
-
-
 
             <div className="video-chat-area" >
                 <div id="video-grid" ref={videoGrid} >
