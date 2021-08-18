@@ -11,12 +11,7 @@ const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing so
 
 const Meeting = (props) => {
 
-    const myPeer = new Peer(undefined, { // initialzing my peer object
-        host: 'pclub-meet-backend.herokuapp.com',
-        port: '443',
-        path: '/peerjs',
-        secure: true
-    })
+    //const videoContainer = {};
 
     //firebase
     const history = useHistory();
@@ -37,8 +32,9 @@ const Meeting = (props) => {
 
     const [peers, setPeers] = useState({})
 
-    const [myId, setMyId] = useState('');
+    let myId = '';
     const [stream, setStream] = useState();
+    const [myPeer, setMyPeer] = useState();
 
     //setting up my video
     const videoGrid = useRef();
@@ -49,18 +45,16 @@ const Meeting = (props) => {
     const [message, setMessage] = useState("")
 
     //helper function to add stream to video element
-    const addVideoStream = (video, stream) => {
+    const addVideoStream = (video, stream, id) => {
+
         video.srcObject = stream
+        video.id = id
         video.addEventListener('loadedmetadata', () => { //alert
             video.play()
         })
         if (videoGrid.current) {
             videoGrid.current.append(video);
         }
-    }
-
-    const handleDisconnect = () => {
-
     }
 
     //audio
@@ -94,24 +88,31 @@ const Meeting = (props) => {
         }
     }
 
-    const connectToNewUser = (userId, stream) => {
-        const call = myPeer.call(userId, stream)
+    const connectToNewUser = (userId, stream, myPeer) => {
+        //console.log(myId);
+        const call = myPeer.call(userId, stream, { metadata: { id: myId } });
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream)
+            addVideoStream(video, userVideoStream, userId)
         })
         call.on('close', () => {
-            video.remove()
+            console.log("connect to user id" + userId)
+            removeVideo(userId)
+        })
+        call.on('error', () => {
+            console.log('peer error ------')
+            removeVideo(userId);
         })
 
         peers[userId] = call
     }
 
-
-    const initializePeerEvents = () => {
+    const initializePeerEvents = (myPeer) => {
 
         myPeer.on('open', id => {
-            setMyId(id);
+            myId = id
+            myVideo.id = id
+            //console.log(myId)
             socket.emit('join-room', props.match.params.roomId, id)
         })
 
@@ -131,6 +132,8 @@ const Meeting = (props) => {
             if (peers[userId]) {
                 peers[userId].close()
             }
+            console.log("socket userid " + userId)
+            removeVideo(userId);
         })
 
         socket.on('disconnect', () => {
@@ -142,9 +145,43 @@ const Meeting = (props) => {
         })
     }
 
+    const handleEnterKey = (e) => {
+        // console.log(e, message)
+        if (e.key === "Enter" && message.length !== 0) {
+            socket.emit("message", message)
+            setMessage("")
+        }
+    };
 
+    const removeVideo = (id) => {
+        const video = document.getElementById(id);
+        if (video) video.remove();
+    }
+
+    const handleDisconnect = () => {
+        // const myMediaTracks = videoContainer[myId].getTracks();
+        // myMediaTracks?.forEach((track) => {
+        //     track.stop();
+        // })
+        socket.disconnect();
+        myPeer.destroy();
+        history.push('/meetend')
+    }
 
     useEffect(() => {
+
+        const myPeer = new Peer(undefined, { // initialzing my peer object
+            host: 'pclub-meet-backend.herokuapp.com',
+            port: '443',
+            path: '/peerjs',
+            secure: true
+        })
+
+        setMyPeer(myPeer)
+
+        initializeSocketEvents();
+
+        initializePeerEvents(myPeer);
 
         navigator.mediaDevices.getUserMedia({
             audio: true,
@@ -162,21 +199,30 @@ const Meeting = (props) => {
                 const video = document.createElement('video') //don't mute this
 
                 call.on('stream', userVideoStream => {
-                    addVideoStream(video, userVideoStream)
+                    addVideoStream(video, userVideoStream, call.metadata.id)
                 })
 
                 call.on('close', () => {
-                    video.remove()
+                    console.log("on close id : " + call.metadata.id);
+                    removeVideo(call.metadata.id)
                 })
+
+                call.on('error', () => {
+                    console.log('peer error ------');
+                    removeVideo(call.metadata.id);
+                });
+
+                peers[call.metadata.id] = call;
             })
 
             socket.on('user-connected', userId => {
                 if (userId !== myId) {
                     // user is joining
                     // setTimeout(() => {
-                    // user joined
-                    connectToNewUser(userId, stream)
+                    //     // user joined
+                        
                     // }, 1000)
+                    connectToNewUser(userId, stream, myPeer)
                 }
             });
 
@@ -201,13 +247,36 @@ const Meeting = (props) => {
             });
         })
 
-        //socket.on('user-disconnected)
-        initializeSocketEvents();
-
-        //myPeer.on('open')
-        initializePeerEvents();
-
     }, [])
+
+    const addMessageElement = (message, userId, id) => {
+        console.log(id, userId)
+        const msg = document.createElement('div')
+        msg.innerHTML =
+            `<article class="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
+                    <div class="msg-box">
+                        <div class="flr">
+                            <div class="messages">
+                                <p class="msg" id="msg-1">
+                                ${userId}: ${message}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>`;
+        // if(message.current)
+        messages.current.append(msg);
+    }
+
+    const sendMessage = () => {
+        if (message !== null)
+            socket.emit("message", message, myId)
+        setMessage("")
+    }
+
+    const setMessageText = (event) => {
+        setMessage(event.target.value)
+    }
 
     function sendMessage() {
         // var msg = document.getElementById('message').value;
