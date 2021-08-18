@@ -268,11 +268,7 @@ const Meeting = (props) => {
         messages.current.append(msg);
     }
 
-    const sendMessage = () => {
-        if (message !== null)
-            socket.emit("message", message, myId)
-        setMessage("")
-    }
+
 
     const setMessageText = (event) => {
         setMessage(event.target.value)
