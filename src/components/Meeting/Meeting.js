@@ -7,14 +7,21 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket (important)
+const socket = io("http://localhost:5000/");//initializing socket (important)
 
 const Meeting = (props) => {
 
     //const videoContainer = {};
+ 
+  //console.log(roomname);
+
+
+//to get the number of clients in this room
+
 
     //firebase
-     const roomId=props.match.params.roomId;
+    const roomId=props.match.params.roomId;
+    
     const history = useHistory();
     const location = useLocation();
     var abc = firebase.auth().currentUser;
@@ -30,7 +37,7 @@ const Meeting = (props) => {
     //states
     const [isVideo, setIsVideo] = useState(location.state.currentVideoState);
     const [isMic, setIsMic] = useState(location.state.currentAudioState);
-
+    const[count,setCount]=useState(0);
     const [peers, setPeers] = useState({})
 
     let myId = '';
@@ -107,17 +114,15 @@ const Meeting = (props) => {
 
         peers[userId] = call
     }
-var count=0;
+    const username=abc.displayName;
     const initializePeerEvents = (myPeer) => {
 
         myPeer.on('open', id => {
             myId = id
             myVideo.id = id
             //console.log(myId)
-            socket.emit('join-room', props.match.params.roomId, id)
-            count++;
-            console.log(count);
-            console.log(id);
+           
+           // socket.emit('join-room', props.match.params.roomId, id)
         })
 
         myPeer.on('error', (err) => {
@@ -125,37 +130,39 @@ var count=0;
             myPeer.reconnect();
         })
     }
-  const username=abc.displayName;
-
+   
     socket.emit('joinRoom', { username, roomId });
+ 
     const initializeSocketEvents = () => {
-        
+
+       
         socket.on('connect', () => {
-            
-            console.log('socket-connected connected user');
-          
-            
+            setCount(count+1);
+            console.log(count);
+            console.log('socket-connected');
+            //console.log(count);
         })
 
         socket.on('user-disconnected', userId => {
             if (peers[userId]) {
                 peers[userId].close()
             }
-            /*console.log("socket userid " + userId) */
-            count--;
-            console.log(count);
+            console.log("socket userid " + userId)
             removeVideo(userId);
+            setCount(count-1);
+            console.log(count);
         })
 
         socket.on('disconnect', () => {
-           
-            console.log('socket-disconnected connected user :');
-            
+            console.log('socket-disconnected');
         })
 
         socket.on('error', () => {
             console.log('socket-error');
         })
+       
+          //console.log(roomname);
+         
     }
 /*
     const handleEnterKey = (e) => {
@@ -184,10 +191,10 @@ var count=0;
     useEffect(() => {
 
         const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'pclub-meet-backend.herokuapp.com',
-            port: '443',
+            host: 'localhost',
+            port: '5000',
             path: '/peerjs',
-            secure: true
+          
         })
 
         setMyPeer(myPeer)
@@ -226,14 +233,17 @@ var count=0;
                 });
 
                 peers[call.metadata.id] = call;
-            })
- socket.on('roomUsers', ({ roomId, users }) => {
+            });
+           // Get room and users
+           socket.on('roomUsers', ({ roomId, users }) => {
             //  outputRoomName(room);
               //outputUsers(users);
               console.log(users);
               //console.log(roomId);
             });
+  
             socket.on('user-connected', userId => {
+                console.log(userId);
                 if (userId !== myId) {
                     // user is joining
                     // setTimeout(() => {
