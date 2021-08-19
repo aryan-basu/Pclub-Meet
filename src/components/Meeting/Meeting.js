@@ -106,7 +106,7 @@ const Meeting = (props) => {
 
         peers[userId] = call
     }
-
+var count=0;
     const initializePeerEvents = (myPeer) => {
 
         myPeer.on('open', id => {
@@ -114,6 +114,9 @@ const Meeting = (props) => {
             myVideo.id = id
             //console.log(myId)
             socket.emit('join-room', props.match.params.roomId, id)
+            count++;
+            console.log(count);
+            console.log(id);
         })
 
         myPeer.on('error', (err) => {
@@ -121,13 +124,13 @@ const Meeting = (props) => {
             myPeer.reconnect();
         })
     }
-var count=0;
+
     const initializeSocketEvents = () => {
         
         socket.on('connect', () => {
-            count++;
+            
             console.log('socket-connected connected user');
-            console.log(count);
+          
             
         })
 
@@ -135,14 +138,16 @@ var count=0;
             if (peers[userId]) {
                 peers[userId].close()
             }
-            console.log("socket userid " + userId)
+            /*console.log("socket userid " + userId) */
+            count--;
+            console.log(count);
             removeVideo(userId);
         })
 
         socket.on('disconnect', () => {
-            count--;
+           
             console.log('socket-disconnected connected user :');
-            console.log(count);
+            
         })
 
         socket.on('error', () => {
