@@ -14,6 +14,7 @@ const Meeting = (props) => {
     //const videoContainer = {};
 
     //firebase
+     const roomId=props.match.params.roomId;
     const history = useHistory();
     const location = useLocation();
     var abc = firebase.auth().currentUser;
@@ -124,7 +125,9 @@ var count=0;
             myPeer.reconnect();
         })
     }
+  const username=abc.displayName;
 
+    socket.emit('joinRoom', { username, roomId });
     const initializeSocketEvents = () => {
         
         socket.on('connect', () => {
@@ -224,7 +227,12 @@ var count=0;
 
                 peers[call.metadata.id] = call;
             })
-
+ socket.on('roomUsers', ({ roomId, users }) => {
+            //  outputRoomName(room);
+              //outputUsers(users);
+              console.log(users);
+              //console.log(roomId);
+            });
             socket.on('user-connected', userId => {
                 if (userId !== myId) {
                     // user is joining
