@@ -121,11 +121,13 @@ const Meeting = (props) => {
             myPeer.reconnect();
         })
     }
-
+var count=0;
     const initializeSocketEvents = () => {
-
+        
         socket.on('connect', () => {
-            console.log('socket-connected');
+            count++;
+            console.log('socket-connected connected user :',count);
+            
         })
 
         socket.on('user-disconnected', userId => {
@@ -137,7 +139,8 @@ const Meeting = (props) => {
         })
 
         socket.on('disconnect', () => {
-            console.log('socket-disconnected');
+            count--;
+            console.log('socket-disconnected connected user :' count);
         })
 
         socket.on('error', () => {
