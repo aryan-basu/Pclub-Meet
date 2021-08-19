@@ -235,12 +235,20 @@ const Meeting = (props) => {
                 peers[call.metadata.id] = call;
             });
            // Get room and users
+             const userList=document.getElementById('users');
            socket.on('roomUsers', ({ roomId, users }) => {
             //  outputRoomName(room);
               //outputUsers(users);
-              console.log(users);
+              //console.log(users);
               //console.log(roomId);
+                 userList.innerHTML = '';
+              users.forEach((user) => {
+                const li = document.createElement('li');
+    li.innerText = user.username;
+    userList.appendChild(li);
             });
+                });
+  
   
             socket.on('user-connected', userId => {
                 console.log(userId);
@@ -329,6 +337,7 @@ const Meeting = (props) => {
                 <section className="chatbox">
                     <h2 className="chatname">Chat</h2>
                     <section className="chat-window">
+               <ul id="users"></ul>
                         <div ref={messages}>
 
                         </div>
