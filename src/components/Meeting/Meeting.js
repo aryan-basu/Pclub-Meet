@@ -122,7 +122,7 @@ const Meeting = (props) => {
             myVideo.id = id
             //console.log(myId)
            
-           // socket.emit('join-room', props.match.params.roomId, id)
+            socket.emit('join-room', props.match.params.roomId, id)
         })
 
         myPeer.on('error', (err) => {
