@@ -126,7 +126,8 @@ var count=0;
         
         socket.on('connect', () => {
             count++;
-            console.log('socket-connected connected user :',count);
+            console.log('socket-connected connected user');
+            console.log(count);
             
         })
 
@@ -140,7 +141,8 @@ var count=0;
 
         socket.on('disconnect', () => {
             count--;
-            console.log('socket-disconnected connected user :' count);
+            console.log('socket-disconnected connected user :');
+            console.log(count);
         })
 
         socket.on('error', () => {
