@@ -56,7 +56,7 @@ const Meeting = (props) => {
     const addVideoStream = (video, stream, id) => {
 
         video.srcObject = stream
-        video.id = username
+        video.id = id
         video.addEventListener('loadedmetadata', () => { //alert
             video.play()
         })
@@ -119,7 +119,7 @@ const Meeting = (props) => {
 
         myPeer.on('open', id => {
             myId = id
-            myVideo.id = username
+            myVideo.id = id
             //console.log(myId)
            
             socket.emit('join-room', props.match.params.roomId, id)
