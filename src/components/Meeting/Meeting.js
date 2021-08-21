@@ -119,7 +119,7 @@ const Meeting = (props) => {
 
         myPeer.on('open', id => {
             myId = id
-            myVideo.id = id
+            myVideo.id = username
             //console.log(myId)
            
             socket.emit('join-room', props.match.params.roomId, id)
