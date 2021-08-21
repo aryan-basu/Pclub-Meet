@@ -336,15 +336,38 @@ const Meeting = (props) => {
     const setMessageText = (event) => {
         setMessage(event.target.value)
     }
-
+    function handlesection() {
+  const participantid=document.getElementById('participant');
+  const partname=document.getElementById('partname');
+  partname.style.display='block';
+  participantid.style.display="flex";
+  const participantwindow=document.getElementById('participant-window');
+  participantwindow.style.display='flex';
+  const chatboxid=document.getElementById('chatbox');
+  chatboxid.style.display='none';
+    }
+    function handlechat(){
+       
+            const participantid=document.getElementById('participant');
+            const partname=document.getElementById('partname');
+            partname.style.display='none';
+            participantid.style.display="none";
+            const participantwindow=document.getElementById('participant-window');
+            participantwindow.style.display='none';
+            const chatboxid=document.getElementById('chatbox');
+            chatboxid.style.display='flex';
+    }
     return (
 
         <div className="main" >
-            <div className="body" >
-                <section className="chatbox">
+             <div className="body" >
+                <section id="participant">
+                    <h2 id="partname">Participants</h2>
+                    <section id="participant-window"> <ul id="users"></ul></section>
+                </section>
+                <section id="chatbox">
                     <h2 className="chatname">Chat</h2>
                     <section className="chat-window">
-               <ul id="users"></ul>
                         <div ref={messages}>
 
                         </div>
@@ -386,8 +409,8 @@ const Meeting = (props) => {
 
                 </div>
                 <div>
-                    <i className="fas fa-user-friends media-icon six"></i>
-                    <i className="far fa-comment-alt media-icon seven"></i>
+              <i className="fas fa-user-friends media-icon six"onClick={handlesection}></i>
+                    <i className="far fa-comment-alt media-icon seven"onClick={handlechat}></i>
                 </div>
             </nav>
 
