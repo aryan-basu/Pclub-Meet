@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-const socket = io("http://localhost:5000/");
+const socket = io("https://pclub-meet-backend.herokuapp.com/");
 
 const Meeting = (props) => {
 
@@ -122,7 +122,7 @@ const Meeting = (props) => {
             myVideo.id = id
             //console.log(myId)
            
-            socket.emit('join-room', props.match.params.roomId, id,username)
+            socket.emit('join-room', props.match.params.roomId, id)
         })
 
         myPeer.on('error', (err) => {
@@ -131,7 +131,7 @@ const Meeting = (props) => {
         })
     }
    
-   //socket.emit('joinRoom', { username, roomId });
+    socket.emit('joinRoom', { username, roomId });
  
     const initializeSocketEvents = () => {
 
@@ -191,10 +191,10 @@ const Meeting = (props) => {
     useEffect(() => {
 
       const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'localhost',
-            port: '5000',
+            host: 'pclub-meet-backend.herokuapp.com',
+            port: '443',
             path: '/peerjs',
-            
+            secure: true
         })
 
         setMyPeer(myPeer)
@@ -251,12 +251,14 @@ const Meeting = (props) => {
   
   
             socket.on('user-connected', userId => {
+                console.log(userId);
                 if (userId !== myId) {
                     // user is joining
-                    setTimeout(() => {
-                        // user joined
-                        connectToNewUser(userId, stream, myPeer)
-                    }, 1000)
+                    // setTimeout(() => {
+                    //     // user joined
+                        
+                    // }, 1000)
+                    connectToNewUser(userId, stream, myPeer)
                 }
             });
 
