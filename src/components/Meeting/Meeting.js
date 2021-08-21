@@ -250,17 +250,24 @@ const Meeting = (props) => {
                 });
   
   
-            socket.on('user-connected', userId => {
-                console.log(userId);
+        
+            
+                 socket.on('user-connected', userId => {
+                //console.log(userId);
                 if (userId !== myId) {
                     // user is joining
                     // setTimeout(() => {
                     //     // user joined
                         
                     // }, 1000)
+                   //connectToNewUser(userId, stream, myPeer)
+                   setTimeout(() => {
+                    // user joined
                     connectToNewUser(userId, stream, myPeer)
+                }, 1000)  
                 }
             });
+
 
             socket.on('newmsg', function (data) {
                 // client side data fetch
