@@ -56,7 +56,7 @@ const Meeting = (props) => {
     const addVideoStream = (video, stream, id) => {
 
         video.srcObject = stream
-        video.id = id
+        video.id = username
         video.addEventListener('loadedmetadata', () => { //alert
             video.play()
         })
