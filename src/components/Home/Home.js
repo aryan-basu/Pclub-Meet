@@ -10,6 +10,8 @@ import { RiAddBoxLine } from 'react-icons/ri'
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase';
 import Header from '../Header/Header';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
 const Home = (props) => {
 
     const history = useHistory();
@@ -57,9 +59,10 @@ const Home = (props) => {
             <Header />
             <div className="home">
                 <h2>Welcome {fullname} !</h2>
-
-                <input type="text" ref={textInput} placeholder="Enter Meeting code"></input>
-                <Button onClick={handlejoin} className="btn">Join meet</Button>
+                <div className="entermeeting">
+                    <input className="home-input" type="text" ref={textInput} placeholder="Enter Meeting code"></input>
+                    <Button onClick={handlejoin} className="btn"><ArrowForwardIcon /></Button>
+                </div>
                 <div className='lines'>
                     <div className='line-1'></div>
                     <p>or</p>

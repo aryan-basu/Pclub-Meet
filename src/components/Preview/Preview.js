@@ -1,11 +1,12 @@
+  
 import React, { useEffect, useState, useRef } from 'react';
 import Card from '@material-ui/core/Card'
 import './Preview.css'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
-// import { BiMicrophone } from 'react-icons/bi'
-// import { IoVideocamOutline } from 'react-icons/io5'
+import { BiMicrophone } from 'react-icons/bi'
+import { IoVideocamOutline } from 'react-icons/io5'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
@@ -146,19 +147,19 @@ const Preview = (props) => {
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-                        {/*<IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
+                        <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
                             <BiMicrophone />  
                         </IconButton> 
                         <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
                             <IoVideocamOutline />
-                        </IconButton> */}
+                        </IconButton>
                         <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
                 <Input type="text" variant="filled" className='username' placeholder='Add Username' />
                 <div className='join'>
                     <Input
-                        className='input'
+                        className='join-input'
                         placeholder='Some text to copy'
                         label="Filled" variant="filled"
                         id="input-with-icon-adornment text"
@@ -170,7 +171,7 @@ const Preview = (props) => {
                             </InputAdornment>
                         }
                     />
-                    <Button onClick={handleJoin} className='btn'>Join Meet</Button>
+                    <Button onClick={handleJoin} className='join-btn'>Join Meet</Button>
                 </div>
             </div>
         </div>

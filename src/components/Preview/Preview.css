@@ -1,17 +1,18 @@
 .preview-main {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 380px;
 }
 
 .card-buttons {
     display: flex;
     align-items: center;
     justify-content: space-evenly; 
-  width: 2%;
-   margin: auto; 
+    width: 2%;
+    margin: auto; 
 }
 
 .preview-icon {
@@ -26,7 +27,11 @@
 
 .username {
     margin: 1rem 0;
-    width: 90%;
+    width: 100%;
+    color: white;
+    background-color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
 }
 
 .join {
@@ -35,13 +40,17 @@
     justify-content: space-evenly;
 }
 
-.join .input,
+/* .join .input,
 .join .btn {
     margin: 1rem 0;
-}
-
-.input {
-    width: 60%;
+} */
+.join-input {
+    width: 100%;
+    color: white;
+    background-color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 .video {
@@ -51,18 +60,26 @@
 video {
     height: 100%;
     width: 100%;
-    padding: 1px;
-    object-fit: cover;
-    transform: rotateY(180deg);
+    border-radius: 5px;
+    /* padding: 1px; */
+    /* object-fit: cover; */
+    /* transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg); */
 }
 
-.btn {
+.join-btn {
+    width: 50%;
     color: #fff!important;
     background: #37AF4B!important;
 }
 
 .MuiInput-underline:after {
     border-color: #37AF4B!important;
+}
+
+@media screen and (max-width: 400px) {
+    .preview-main {
+        width: 95%;
+    }
 }

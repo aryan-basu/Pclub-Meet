@@ -45,9 +45,6 @@ class Signin extends React.Component {
     };
 
 
-
-
-
     handleChange = event => {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -70,10 +67,10 @@ class Signin extends React.Component {
         return (
 
             <div>
-                <Header currentUser={this.state.currentUser} />
+                <Header />
                 <div className="main-body">
                     <div className="desc">
-                        <h2>Introducing a free and secure video calling service accessible for all.</h2>
+                        <h1>Introducing a free and secure video calling service accessible for all</h1>
                         <p>For more information, visit {" "}
                             <a
                                 className='text-success'
@@ -81,8 +78,8 @@ class Signin extends React.Component {
                         </p>
                     </div>
                     <div className="card">
-                        <h1>Sign In</h1>
-                        <FormControl className='form' autoComplete="off">
+                        <h2>Sign In</h2>
+                        <FormControl className='signin-form' autoComplete="off">
                             <form onSubmit={this.handleSubmit}>
                                 <Input
                                     required
@@ -122,7 +119,7 @@ class Signin extends React.Component {
                                 <Button variant="contained" type='submit' className='btn'>Login</Button>
 
                                 <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-                                <p className='signup'>Don't have an account, {" "}
+                                <p className='signin-signup'>Don't have an account, {" "}
                                     <a
                                         className='text-success'
                                         href='Signup'>Signup</a>

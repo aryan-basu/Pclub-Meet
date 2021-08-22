@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button'
 import Email from '@material-ui/icons/Email'
 // import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './Signup.css'
-import '../Login/Signin.css'
-import '../Login/Signin'
+// import '../Login/Signin.css'
+// import '../Login/Signin'
 import Header from '../Header/Header';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import { withRouter } from 'react-router-dom';
@@ -62,9 +62,9 @@ class Signup extends React.Component {
                 <Header currentUser={this.state.currentUser} />
 
                 <div className="signup-card">
+                    <h2>Sign Up</h2>
+                    <FormControl className='signup-form' onSubmit={this.handleSubmit} autoComplete="off">
 
-                    <FormControl className='form' onSubmit={this.handleSubmit} autoComplete="off">
-                        <h1>Sign Up</h1>
                         <form onSubmit={this.handleSubmit}>
                             <Input
                                 required

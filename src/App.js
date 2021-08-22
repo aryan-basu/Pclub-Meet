@@ -57,13 +57,7 @@ class App extends React.Component{
     
   return (
   
-    <div>
-    
-  
-   
-
       <Router>
-     
         <Switch>
           <Route path='/' exact component={Signin} />
           <Route path='/signin' exact component={Signin} />
@@ -75,7 +69,6 @@ class App extends React.Component{
         </Switch>
       </Router>
     
-    </div>
   );
   }
 }
