@@ -7,13 +7,21 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-const socket = io("https://pclub-meet-backend.herokuapp.com/");//initializing socket (important)
+const socket = io("https://pclub-meet-backend.herokuapp.com/");
 
 const Meeting = (props) => {
 
     //const videoContainer = {};
+ 
+  //console.log(roomname);
+
+
+//to get the number of clients in this room
+
 
     //firebase
+    const roomId=props.match.params.roomId;
+    
     const history = useHistory();
     const location = useLocation();
     var abc = firebase.auth().currentUser;
@@ -29,7 +37,7 @@ const Meeting = (props) => {
     //states
     const [isVideo, setIsVideo] = useState(location.state.currentVideoState);
     const [isMic, setIsMic] = useState(location.state.currentAudioState);
-
+    const[count,setCount]=useState(0);
     const [peers, setPeers] = useState({})
 
     let myId = '';
@@ -106,13 +114,14 @@ const Meeting = (props) => {
 
         peers[userId] = call
     }
-
+    const username=abc.displayName;
     const initializePeerEvents = (myPeer) => {
 
         myPeer.on('open', id => {
             myId = id
             myVideo.id = id
             //console.log(myId)
+           
             socket.emit('join-room', props.match.params.roomId, id)
         })
 
@@ -121,11 +130,17 @@ const Meeting = (props) => {
             myPeer.reconnect();
         })
     }
-
+   
+    socket.emit('joinRoom', { username, roomId });
+ 
     const initializeSocketEvents = () => {
 
+       
         socket.on('connect', () => {
+            setCount(count+1);
+            console.log(count);
             console.log('socket-connected');
+            //console.log(count);
         })
 
         socket.on('user-disconnected', userId => {
@@ -134,6 +149,8 @@ const Meeting = (props) => {
             }
             console.log("socket userid " + userId)
             removeVideo(userId);
+            setCount(count-1);
+            console.log(count);
         })
 
         socket.on('disconnect', () => {
@@ -143,6 +160,9 @@ const Meeting = (props) => {
         socket.on('error', () => {
             console.log('socket-error');
         })
+       
+          //console.log(roomname);
+         
     }
 /*
     const handleEnterKey = (e) => {
@@ -170,7 +190,7 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
-        const myPeer = new Peer(undefined, { // initialzing my peer object
+      const myPeer = new Peer(undefined, { // initialzing my peer object
             host: 'pclub-meet-backend.herokuapp.com',
             port: '443',
             path: '/peerjs',
@@ -213,18 +233,41 @@ const Meeting = (props) => {
                 });
 
                 peers[call.metadata.id] = call;
-            })
-
-            socket.on('user-connected', userId => {
+            });
+           // Get room and users
+             const userList=document.getElementById('users');
+           socket.on('roomUsers', ({ roomId, users }) => {
+            //  outputRoomName(room);
+              //outputUsers(users);
+              //console.log(users);
+              //console.log(roomId);
+                 userList.innerHTML = '';
+              users.forEach((user) => {
+                const li = document.createElement('li');
+    li.innerText = user.username;
+    userList.appendChild(li);
+            });
+                });
+  
+  
+        
+            
+                 socket.on('user-connected', userId => {
+                //console.log(userId);
                 if (userId !== myId) {
                     // user is joining
                     // setTimeout(() => {
                     //     // user joined
                         
                     // }, 1000)
+                   //connectToNewUser(userId, stream, myPeer)
+                   setTimeout(() => {
+                    // user joined
                     connectToNewUser(userId, stream, myPeer)
+                }, 1000)  
                 }
             });
+
 
             socket.on('newmsg', function (data) {
                 // client side data fetch
@@ -293,12 +336,36 @@ const Meeting = (props) => {
     const setMessageText = (event) => {
         setMessage(event.target.value)
     }
-
+    function handlesection() {
+  const participantid=document.getElementById('participant');
+  const partname=document.getElementById('partname');
+  partname.style.display='block';
+  participantid.style.display="flex";
+  const participantwindow=document.getElementById('participant-window');
+  participantwindow.style.display='flex';
+  const chatboxid=document.getElementById('chatbox');
+  chatboxid.style.display='none';
+    }
+    function handlechat(){
+       
+            const participantid=document.getElementById('participant');
+            const partname=document.getElementById('partname');
+            partname.style.display='none';
+            participantid.style.display="none";
+            const participantwindow=document.getElementById('participant-window');
+            participantwindow.style.display='none';
+            const chatboxid=document.getElementById('chatbox');
+            chatboxid.style.display='flex';
+    }
     return (
 
         <div className="main" >
-            <div className="body" >
-                <section className="chatbox">
+             <div className="body" >
+                <section id="participant">
+                    <h2 id="partname">Participants</h2>
+                    <section id="participant-window"> <ul id="users"></ul></section>
+                </section>
+                <section id="chatbox">
                     <h2 className="chatname">Chat</h2>
                     <section className="chat-window">
                         <div ref={messages}>
@@ -342,8 +409,8 @@ const Meeting = (props) => {
 
                 </div>
                 <div>
-                    <i className="fas fa-user-friends media-icon six"></i>
-                    <i className="far fa-comment-alt media-icon seven"></i>
+              <i className="fas fa-user-friends media-icon six"onClick={handlesection}></i>
+                    <i className="far fa-comment-alt media-icon seven"onClick={handlechat}></i>
                 </div>
             </nav>
 
