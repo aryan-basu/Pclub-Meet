@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-const socket = io("https://pclub-meet-backend.herokuapp.com/");
+const socket = io("http://localhost:5000/");
 
 const Meeting = (props) => {
 
@@ -25,6 +25,7 @@ const Meeting = (props) => {
     const history = useHistory();
     const location = useLocation();
     var abc = firebase.auth().currentUser;
+    let userName = abc.displayName;
     firebase.auth().onAuthStateChanged(function (user) {
 
         if (user) {
@@ -98,7 +99,7 @@ const Meeting = (props) => {
 
     const connectToNewUser = (userId, stream, myPeer) => {
         //console.log(myId);
-        const call = myPeer.call(userId, stream, { metadata: { id: myId } });
+        const call = myPeer.call(userId, stream, { metadata: { id: myId, username : userName } });
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, userId)
@@ -114,15 +115,23 @@ const Meeting = (props) => {
 
         peers[userId] = call
     }
-    const username=abc.displayName;
+
+  const username=abc.displayName;
+    
     const initializePeerEvents = (myPeer) => {
 
         myPeer.on('open', id => {
             myId = id
             myVideo.id = id
             //console.log(myId)
-           
-            socket.emit('join-room', props.match.params.roomId, id)
+
+            const userData = {
+                roomId : props.match.params.roomId,
+                userId : id,
+                username : userName
+            }
+
+            socket.emit('join-room', userData)
         })
 
         myPeer.on('error', (err) => {
@@ -130,7 +139,6 @@ const Meeting = (props) => {
             myPeer.reconnect();
         })
     }
-   
     socket.emit('joinRoom', { username, roomId });
  
     const initializeSocketEvents = () => {
@@ -191,10 +199,10 @@ const Meeting = (props) => {
     useEffect(() => {
 
       const myPeer = new Peer(undefined, { // initialzing my peer object
-            host: 'pclub-meet-backend.herokuapp.com',
-            port: '443',
+            host: 'localhost',
+            port: '5000',
             path: '/peerjs',
-            secure: true
+         
         })
 
         setMyPeer(myPeer)
@@ -203,6 +211,7 @@ const Meeting = (props) => {
 
         initializePeerEvents(myPeer);
 
+      
         navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true,
@@ -215,6 +224,9 @@ const Meeting = (props) => {
             addVideoStream(myVideo, stream)
 
             myPeer.on('call', call => {
+
+                console.log(call.metadata)
+
                 call.answer(stream)
                 const video = document.createElement('video') //don't mute this
 
@@ -233,7 +245,8 @@ const Meeting = (props) => {
                 });
 
                 peers[call.metadata.id] = call;
-            });
+            })
+
            // Get room and users
              const userList=document.getElementById('users');
            socket.on('roomUsers', ({ roomId, users }) => {
@@ -252,7 +265,7 @@ const Meeting = (props) => {
   
         
             
-                 socket.on('user-connected', userId => {
+               /*  socket.on('user-connected', userId => {
                 //console.log(userId);
                 if (userId !== myId) {
                     // user is joining
@@ -265,6 +278,16 @@ const Meeting = (props) => {
                     // user joined
                     connectToNewUser(userId, stream, myPeer)
                 }, 1000)  
+                }
+            }); */
+               socket.on('user-connected', userData => {
+                console.log(userData)
+                if (userData.userId !== myId) {
+                    //user is joining
+                    setTimeout(() => {
+                        // user joined
+                        connectToNewUser(userData.userId, stream, myPeer)                      
+                    }, 1000)
                 }
             });
 
