@@ -1,0 +1,28 @@
+.meetend {
+    width: 70%;
+    margin: 10em auto;
+    text-align: center;
+}
+.meetend p {
+    color: white;
+    font-size: 2em;
+    margin: 1em auto;
+}
+
+@media screen and (max-width: 400px) {
+    .meetend {
+        width: 95%
+    }
+    .meetend p {
+        font-size: 1.4em;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 730px) {
+    .meetend {
+        width: 85%;
+    }
+    .meetend p {
+        font-size: 1.6em;
+    }
+}

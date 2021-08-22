@@ -1,0 +1,48 @@
+.meetend-logos {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 350px;
+    margin: 18px auto;
+}
+.meetend-line {
+    color: white;
+    height: 5vh;
+    border: 1px solid;
+    background: white;
+}
+.meetend-logo-img {
+    width: 150px;
+}
+
+.meetend-logos h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--text);
+}
+
+@media screen and (max-width: 400px) {
+    .meetend-logos {
+        width: 240px;
+    }
+    .meetend-logos .meetend-logo-img {
+        width: 105px;
+    }
+    .meetend-logos h1 {
+        font-size: 25px;
+    }
+    .meetend-logos .meetend-line {
+        height: 25px;
+    }
+}
+@media (min-width: 400px) and (max-width: 730px) {
+    .meetend-logos {
+        width: 290px;
+    }
+    .meetend-logos .meetend-logo-img {
+        width: 120px;
+    }
+    .meetend-logos h1 {
+        font-size: 28px;
+    }
+}
