@@ -147,16 +147,16 @@ const Preview = (props) => {
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-                        <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
-                            <BiMicrophone />  
-                        </IconButton> 
-                        <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
-                            <IoVideocamOutline />
-                        </IconButton>
+                            {/* <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
+                                <BiMicrophone />  
+                            </IconButton> 
+                            <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
+                                <IoVideocamOutline />
+                            </IconButton> */}
                         <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
-                <Input type="text" variant="filled" className='username' placeholder='Add Username' />
+                {/* <Input type="text" variant="filled" className='username' placeholder='Add Username' /> */}
                 <div className='join'>
                     <Input
                         className='join-input'

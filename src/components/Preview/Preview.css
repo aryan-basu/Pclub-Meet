@@ -4,15 +4,15 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 380px;
+    width: 320px;
 }
 
 .card-buttons {
-    display: flex;
+    /* display: flex; */
     align-items: center;
-    justify-content: space-evenly; 
-    width: 2%;
-    margin: auto; 
+    justify-content: center; 
+    /* width: 2%; */
+    /* margin: auto;  */
 }
 
 .preview-icon {
@@ -25,20 +25,20 @@
     cursor: pointer;
 }
 
-.username {
+/* .username {
     margin: 1rem 0;
     width: 100%;
     color: white;
     background-color: white;
     padding: 3px 10px;
     border-radius: 5px;
-}
+} */
 
-.join {
+/* .join {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-}
+} */
 
 /* .join .input,
 .join .btn {
@@ -50,7 +50,7 @@
     background-color: white;
     padding: 3px 10px;
     border-radius: 5px;
-    margin-right: 5px;
+    margin: 10px 0px;
 }
 
 .video {
@@ -60,16 +60,15 @@
 video {
     height: 100%;
     width: 100%;
+    object-fit: cover;
     border-radius: 5px;
-    /* padding: 1px; */
-    /* object-fit: cover; */
-    /* transform: rotateY(180deg);
+    transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg); */
-}
+    -moz-transform: rotateY(180deg);
+  }
 
 .join-btn {
-    width: 50%;
+    width: 100%;
     color: #fff!important;
     background: #37AF4B!important;
 }
@@ -80,6 +79,6 @@ video {
 
 @media screen and (max-width: 400px) {
     .preview-main {
-        width: 95%;
+        width: 320px;
     }
 }
