@@ -83,9 +83,10 @@
 }
 #participant {
   flex-grow: 1;
+  display: none;
 }
 #participant-window{
-  max-height: calc(100% - 60px);
+  /* max-height: calc(100% - 60px); */
   background: #ffffff;
   overflow: auto;
 }
@@ -174,6 +175,14 @@
   text-align: right;
 } */
 
+#users {
+  color: black;
+  list-style-type: none;
+  padding: 0;
+}
+#users li {
+  padding: 10px 20px;
+}
 #send {
   padding-left: 1rem;
   color: white;
