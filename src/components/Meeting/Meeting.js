@@ -418,6 +418,8 @@ const Meeting = (props) => {
         participantwindow.style.display = 'none';
         const chatboxid = document.getElementById('chatbox');
         chatboxid.style.display = 'block';
+        const chatinputid=document.getElementById('chat-input');
+        chatinputid.style.display='flex'
     }
 
     const handleSidebar = () => {
