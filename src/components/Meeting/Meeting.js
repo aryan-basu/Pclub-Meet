@@ -40,7 +40,7 @@ const Meeting = (props) => {
     const [isMic, setIsMic] = useState(location.state.currentAudioState);
     const [count, setCount] = useState(0);
     const [peers, setPeers] = useState({})
-    const users=[];
+    const users = [];
     let myId = '';
     const [stream, setStream] = useState();
     const [myPeer, setMyPeer] = useState();
@@ -53,54 +53,51 @@ const Meeting = (props) => {
     const messages = useRef()
     const [message, setMessage] = useState("")
 
-    const [sidebar, setSidebar] = useState(false);
-
-    const matches = useMediaQuery('(min-width:850px)');
+    const matches = useMediaQuery('(max-width:800px)');
 
     //helper function to add stream to video element
-    const addVideoStream = (video, stream, id,name) => {
-       
-        
+    const addVideoStream = (video, stream, id, name) => {
+
+
         const index = users.findIndex(user => user.id === id);
-        if(index===-1||id==undefined)
-        {
-           
-            const user={id,name}
+        if (index === -1 || id == undefined) {
+
+            const user = { id, name }
             users.push(user);
-        
-        
-  //  console.log(name);
-        video.srcObject = stream;
-      //video.id=id;
-    
-        video.addEventListener("loadedmetadata", () => {
-            video.play();
-        });
-      
-        if (videoGrid.current) {
-            const videoWrapper = document.createElement("div");
-            videoWrapper.id = id;
-            videoWrapper.classList.add("video-wrapper");
-        
-            // peer name
-            const namePara = document.createElement("p");
-           if(name===undefined)
-           name=abc.displayName;
-            namePara.innerHTML = name;
-            namePara.classList.add("video-element");
-            namePara.classList.add("name");
-        
-            const elementsWrapper = document.createElement("div");
-            elementsWrapper.classList.add("elements-wrapper");
-            
-           
-           elementsWrapper.appendChild(namePara);
-            videoWrapper.appendChild(elementsWrapper);
-          videoWrapper.appendChild(video);
-            videoGrid.current.append(videoWrapper);
-        } 
+
+
+            //  console.log(name);
+            video.srcObject = stream;
+            //video.id=id;
+
+            video.addEventListener("loadedmetadata", () => {
+                video.play();
+            });
+
+            if (videoGrid.current) {
+                const videoWrapper = document.createElement("div");
+                videoWrapper.id = id;
+                videoWrapper.classList.add("video-wrapper");
+
+                // peer name
+                const namePara = document.createElement("p");
+                if (name === undefined)
+                    name = abc.displayName;
+                namePara.innerHTML = name;
+                namePara.classList.add("video-element");
+                namePara.classList.add("name");
+
+                const elementsWrapper = document.createElement("div");
+                elementsWrapper.classList.add("elements-wrapper");
+
+
+                elementsWrapper.appendChild(namePara);
+                videoWrapper.appendChild(elementsWrapper);
+                videoWrapper.appendChild(video);
+                videoGrid.current.append(videoWrapper);
+            }
+        }
     }
-}
 
     //audio
     const handleAudioClick = () => {
@@ -139,17 +136,18 @@ const Meeting = (props) => {
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
             firebase.firestore().collection(`${roomId}`).doc(`${userId}`).get().then((doc) => {
-                if (doc.exists){
-                    
-                    const name= doc.data().username;
+                if (doc.exists) {
+
+                    const name = doc.data().username;
                     // Use a City instance method
-                    addVideoStream(video, userVideoStream, userId,name)
-                    
-                  } else {
+                    addVideoStream(video, userVideoStream, userId, name)
+
+                } else {
                     console.log("No such document!");
-                  }}).catch((error) => {
-                    console.log("Error getting document:", error);
-                  });
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
         })
         call.on('close', () => {
             console.log("connect to user id" + userId)
@@ -170,7 +168,7 @@ const Meeting = (props) => {
             myVideo.id = id
             //console.log(myId)
 
-            socket.emit('join-room', props.match.params.roomId, id,abc.displayName)
+            socket.emit('join-room', props.match.params.roomId, id, abc.displayName)
         })
 
         myPeer.on('error', (err) => {
@@ -269,17 +267,18 @@ const Meeting = (props) => {
 
                 call.on('stream', userVideoStream => {
                     firebase.firestore().collection(`${roomId}`).doc(`${call.metadata.id}`).get().then((doc) => {
-                        if (doc.exists){
-                            
-                            const name= doc.data().username;
-                            addVideoStream(video, userVideoStream, call.metadata.id,name)
+                        if (doc.exists) {
+
+                            const name = doc.data().username;
+                            addVideoStream(video, userVideoStream, call.metadata.id, name)
                             // Use a City instance method
-                            
-                          } else {
+
+                        } else {
                             console.log("No such document!");
-                          }}).catch((error) => {
-                            console.log("Error getting document:", error);
-                          });
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
                 })
 
                 call.on('close', () => {
@@ -405,8 +404,8 @@ const Meeting = (props) => {
         participantwindow.style.display = 'block';
         const chatboxid = document.getElementById('chatbox');
         chatboxid.style.display = 'none';
-        const chatinputid=document.getElementById('chat-input');
-        chatinputid.style.display='none'
+        const chatinputid = document.getElementById('chat-input');
+        chatinputid.style.display = 'none'
     }
     function handlechat() {
 
@@ -418,18 +417,31 @@ const Meeting = (props) => {
         participantwindow.style.display = 'none';
         const chatboxid = document.getElementById('chatbox');
         chatboxid.style.display = 'block';
-        const chatinputid=document.getElementById('chat-input');
-        chatinputid.style.display='flex'
+        const chatinputid = document.getElementById('chat-input');
+        chatinputid.style.display = 'flex'
     }
 
     const handleSidebar = () => {
-        setSidebar(!sidebar);
+        var x = document.getElementById("chatbox-container");
+        var y = document.getElementById("meeting-body");
+        if (x.style.display === "none") {
+            x.style.display = "flex";
+        }
+        else {
+            x.style.display = "none";
+        }
+        if (matches && y.style.display === "block") {
+            y.style.display = "none";
+        }
+        else {
+            y.style.display = "block";
+        }
     }
     return (
 
         <div className="meeting-container" >
             <div className="meeting-main">
-                <div className="meeting-body">
+                <div id="meeting-body">
                     <div className="video-area" >
                         <div id="video-grid" ref={videoGrid} >
 
@@ -439,7 +451,7 @@ const Meeting = (props) => {
                     <div className="bottom-nav" >
                         <div className="bottom-left">
                             <i className="fas fa-hand-paper media-icon one" ></i>
-                            <i className="fas fa-ellipsis-h media-icon two"></i>
+                            <i className="fas fa-ellipsis-h media-icon two" onClick={handleSidebar}></i>
                         </div>
                         <div className="bottom-mid">
                             <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
@@ -452,15 +464,21 @@ const Meeting = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="chatbox" >
+                <div id="chatbox-container" >
                     <div id="participant">
-                        <h2 id="partname">Participants</h2>
+                        <div className="participant-container">
+                            <h2 id="partname">Participants</h2>
+                            <i className="fa fa-times" aria-hidden="true" onClick={handleSidebar}></i>
+                        </div>
                         <div id="participant-window">
                             <ul id="users"></ul>
                         </div>
                     </div>
                     <div id="chatbox">
-                        <h2 className="chatname">Chat</h2>
+                        <div className="chatname-container">
+                            <h2 className="chatname">Chat</h2>
+                            <i className="fa fa-times" aria-hidden="true" onClick={handleSidebar}></i>
+                        </div>
                         <div className="chat-window">
                             <div ref={messages}>
                             </div>
