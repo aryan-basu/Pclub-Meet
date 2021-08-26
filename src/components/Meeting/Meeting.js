@@ -40,7 +40,7 @@ const Meeting = (props) => {
     const [isMic, setIsMic] = useState(location.state.currentAudioState);
     const [count, setCount] = useState(0);
     const [peers, setPeers] = useState({})
-
+    const users=[];
     let myId = '';
     const [stream, setStream] = useState();
     const [myPeer, setMyPeer] = useState();
@@ -59,24 +59,17 @@ const Meeting = (props) => {
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream, id,name) => {
-
-        const videoWrapper = document.createElement("div");
-        videoWrapper.id = id;
-        videoWrapper.classList.add("video-wrapper");
-    
-        // peer name
-        const namePara = document.createElement("p");
-       if(name===undefined)
-       name=abc.displayName;
-        namePara.innerHTML = name;
-        namePara.classList.add("video-element");
-        namePara.classList.add("name");
-    
-        const elementsWrapper = document.createElement("div");
-        elementsWrapper.classList.add("elements-wrapper");
-        
        
-    
+        
+        const index = users.findIndex(user => user.id === id);
+        if(index===-1||id==undefined)
+        {
+           
+            const user={id,name}
+            users.push(user);
+        
+        
+  //  console.log(name);
         video.srcObject = stream;
       //video.id=id;
     
@@ -85,12 +78,29 @@ const Meeting = (props) => {
         });
       
         if (videoGrid.current) {
+            const videoWrapper = document.createElement("div");
+            videoWrapper.id = id;
+            videoWrapper.classList.add("video-wrapper");
+        
+            // peer name
+            const namePara = document.createElement("p");
+           if(name===undefined)
+           name=abc.displayName;
+            namePara.innerHTML = name;
+            namePara.classList.add("video-element");
+            namePara.classList.add("name");
+        
+            const elementsWrapper = document.createElement("div");
+            elementsWrapper.classList.add("elements-wrapper");
+            
+           
            elementsWrapper.appendChild(namePara);
             videoWrapper.appendChild(elementsWrapper);
           videoWrapper.appendChild(video);
             videoGrid.current.append(videoWrapper);
         } 
     }
+}
 
     //audio
     const handleAudioClick = () => {

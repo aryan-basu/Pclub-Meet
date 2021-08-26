@@ -13,9 +13,35 @@
 #video-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-gap: 0.85rem;
+  position: relative;
 }
-
+  
+        
+  .elements-wrapper {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.24s linear;
+  }
+    .video-element {
+        outline: none;
+        border: none;
+        z-index: 1;
+        position: absolute;
+        display: flex;
+        padding: 6px;
+        background-color: rgba(var(--color1), 0.8);
+        margin: 0.5rem;
+        color: white;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: all 0.24s linear;
+    }
+      
 /* https://codepen.io/villa7/pen/yOMZoB */
 
 .chatbox {
@@ -188,7 +214,7 @@
   color: white;
 }
 
-video {
+/*video {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -196,7 +222,7 @@ video {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
   -moz-transform: rotateY(180deg);
-}
+}*/ 
 
 .fa-phone:hover{
   background-color: rgb(212, 16, 16);
