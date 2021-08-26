@@ -395,6 +395,8 @@ const Meeting = (props) => {
         participantwindow.style.display = 'block';
         const chatboxid = document.getElementById('chatbox');
         chatboxid.style.display = 'none';
+        const chatinputid=document.getElementById('chat-input');
+        chatinputid.style.display='none'
     }
     function handlechat() {
 
@@ -452,7 +454,7 @@ const Meeting = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="chat-input" >
+                    <div id="chat-input" >
                         <input
                             type="text"
                             // id='message'

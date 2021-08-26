@@ -101,7 +101,7 @@
 .chatname.h2{
   margin-left: 2rem;
 }
-.chat-input {
+#chat-input {
   /* height: 64px; */
   background-color:#37AF4B;
   /*background: #40434e;  */
@@ -113,7 +113,7 @@
   padding: 2px;
   /* box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28); */
 }
-.chat-input input {
+#chat-input input {
   /* height: 59px; */
   /* line-height: 60px; */
   outline: none;
