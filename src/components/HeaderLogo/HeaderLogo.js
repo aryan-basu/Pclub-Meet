@@ -3,7 +3,7 @@
 import MeetendLogo from '../assets/images/Logo.png';
 import "./HeaderLogo.css"
 
-const Logo = () => {
+const HeaderLogo = () => {
     return (
         <div className="meetend-header">
             <div className="meetend-logos">
@@ -15,4 +15,4 @@ const Logo = () => {
     );
 }
 
-export default Logo;
+export default HeaderLogo;
