@@ -20,7 +20,6 @@ import Header from '../Header/Header';
 
 const Preview = (props) => {
 
-   
     //states & ref's
     const history = useHistory();
     const location = useLocation();
@@ -50,7 +49,6 @@ const Preview = (props) => {
 
     //audio
     const handleAudioClick = () => {
-        window.alert('Please wait for camera and code to preview then click on join meet');
         setIsMic(!isMic);
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
@@ -71,7 +69,6 @@ const Preview = (props) => {
 
     //video
     const handleVideoClick = () => {
-        window.alert('Please wait for camera and code to preview then click on join meet');
         setIsVideo(!isVideo);
         const enabled = stream.getVideoTracks()[0].enabled;
         if (enabled) {
@@ -127,7 +124,7 @@ const Preview = (props) => {
 
     //handle button join
     const handleJoin = () => {
-     
+
         const newPath = '/meeting/' + roomId
 
         history.push({
@@ -141,7 +138,6 @@ const Preview = (props) => {
 
     return (
         <div>
-            
             <Header />
             <div className="preview-main">
               {/*  <h1 className='heading'>Room #1</h1> */}
