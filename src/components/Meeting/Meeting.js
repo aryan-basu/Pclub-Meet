@@ -501,79 +501,8 @@ const Meeting = (props) => {
                     </div>
                 </div >
 
-
-
             </div>
         </div>
-        // <div className="meeting-container">
-        //     <div className="meeting-main" >
-        //         <div className="meeting-body" >
-        //             <div className="video-area">
-        //                 <div id="video-grid" ref={videoGrid} >
-
-        //                 </div>
-        //             </div>
-        //             {matches && <div className="bottom-nav">
-        //                 <div className="bottom-left">
-        //                     <i className="fas fa-hand-paper media-icon one" ></i>
-        //                     <i className="fas fa-ellipsis-h media-icon two" onClick={handleSidebar}></i>
-        //                 </div>
-        //                 <div className="bottom-mid">
-        //                     <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-
-        //                     <i onClick={handleDisconnect} className="far fa-phone media-icon four" ></i>
-        //                     <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
-        //                 </div>
-        //                 <div className="bottom-right">
-        //                     <i className="fas fa-user-friends media-icon six"></i>
-        //                     <i className="far fa-comment-alt media-icon seven"></i>
-        //                 </div>
-        //             </div>}
-        //             {!sidebar && !matches && <div className="bottom-nav">
-        //                 <div className="bottom-left">
-        //                     <i className="fas fa-hand-paper media-icon one" ></i>
-        //                     <i className="fas fa-ellipsis-h media-icon two" onClick={handleSidebar}></i>
-        //                 </div>
-        //                 <div className="bottom-mid">
-        //                     <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-
-        //                     <i onClick={handleDisconnect} className="far fa-phone media-icon four" ></i>
-        //                     <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
-        //                 </div>
-        //                 <div className="bottom-right">
-        //                     <i className="fas fa-user-friends media-icon six"></i>
-        //                     <i className="far fa-comment-alt media-icon seven"></i>
-        //                 </div>
-        //             </div>}
-        //         </div>
-        //         {sidebar && <div className="chatbox">
-        //             <i className="fa fa-times" aria-hidden="true" onClick={handleSidebar}></i>
-        //             <h2 className="chatname">Chat</h2>
-        //             <section id="participant">
-        //                 <h2 id="partname">Participants</h2>
-        //                 <section id="participant-window"> <ul id="users"></ul></section>
-        //             </section>
-        //             <div ref={messages}>
-
-        //             </div>
-        //             <div className="chat-input" >
-        //                 <input
-        //                     type="text"
-        //                     // id='message'
-        //                     autoComplete="off"
-        //                     placeholder="Type a message..."
-        //                     onChange={setMessageText}
-        //                     value={message}
-        //                     onKeyPress={handleEnterKey}
-        //                 />
-
-        //                 <IconButton id='msg-send' onClick={sendMessage}>
-        //                     <SendIcon />
-        //                 </IconButton>
-        //             </div>
-        //         </div>}
-        //     </div>
-        // </div>
     );
 
 }

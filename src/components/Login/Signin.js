@@ -10,7 +10,7 @@ import './Signin.css'
 import firebase from 'firebase';
 // import { useHistory } from 'react-router';
 import { auth } from '../../firebase/firebase.utils';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
 
 
@@ -49,6 +49,17 @@ class Signin extends React.Component {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     };
+
+    handleShowPassword = () => {
+        var x = document.getElementById("password");
+        if(x.getAttribute("type") === "password") {
+            x.setAttribute("type", "text");
+        }
+        else {
+            x.setAttribute("type", "password")
+        }
+    }
+
     render() {
         // const { history } = this.props;
         var uiConfig = {
@@ -104,6 +115,7 @@ class Signin extends React.Component {
                                     placeholder='Password'
                                     type='password'
                                     name='password'
+                                    id="password"
                                     // value={this.state.password}
                                     value={password}
                                     onChange={this.handleChange}
@@ -115,9 +127,17 @@ class Signin extends React.Component {
                                             <VpnKeyIcon />
                                         </InputAdornment>
                                     }
+                                    endAdornment={
+                                        <InputAdornment position="start" className='icons'>
+                                            <i class="far fa-eye" id="togglePassword" onClick={this.handleShowPassword}></i>
+                                        </InputAdornment>
+                                    }
                                 />
+                                
                                 <Button variant="contained" type='submit' className='btn'>Login</Button>
-
+                                <div className="signin-forgotpassword">
+                                    <Link to="/forgotPassword">Forgot Password ?</Link>
+                                </div>
                                 <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
                                 <p className='signin-signup'>Don't have an account, {" "}
                                     <a
