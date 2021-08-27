@@ -228,7 +228,7 @@
   color: white;
 }
 
-/*video {
+/* video {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -236,7 +236,7 @@
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
   -moz-transform: rotateY(180deg);
-}*/ 
+}  */
 
 .fa-times {
   padding: 1rem;
@@ -301,6 +301,12 @@
   border-bottom-right-radius: 2rem;
   border-top-right-radius: 2rem;
   box-sizing: border-box;
+}
+
+@media screen and (min-width: 800px) {
+  .fa-times {
+    display: none;
+  }
 }
 
 @media (min-width: 400px) and (max-width: 800px) {

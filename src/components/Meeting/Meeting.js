@@ -396,29 +396,86 @@ const Meeting = (props) => {
         setMessage(event.target.value)
     }
     function handlesection() {
-        const participantid = document.getElementById('participant');
-        const partname = document.getElementById('partname');
-        partname.style.display = 'block';
-        participantid.style.display = "block";
-        const participantwindow = document.getElementById('participant-window');
-        participantwindow.style.display = 'block';
-        const chatboxid = document.getElementById('chatbox');
-        chatboxid.style.display = 'none';
-        const chatinputid = document.getElementById('chat-input');
-        chatinputid.style.display = 'none'
+        if (matches) {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'block';
+            participantid.style.display = "block";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'block';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'none';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'none'
+
+            var x = document.getElementById("chatbox-container");
+            var y = document.getElementById("meeting-body");
+            if (x.style.display === "none") {
+                x.style.display = "flex";
+            }
+            else {
+                x.style.display = "none";
+            }
+            if (matches && y.style.display === "block") {
+                y.style.display = "none";
+            }
+            else {
+                y.style.display = "block";
+            }
+        }
+        else {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'block';
+            participantid.style.display = "block";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'block';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'none';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'none'
+        }
     }
     function handlechat() {
+        if (matches) {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'none';
+            participantid.style.display = "none";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'none';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'block';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'flex'
 
-        const participantid = document.getElementById('participant');
-        const partname = document.getElementById('partname');
-        partname.style.display = 'none';
-        participantid.style.display = "none";
-        const participantwindow = document.getElementById('participant-window');
-        participantwindow.style.display = 'none';
-        const chatboxid = document.getElementById('chatbox');
-        chatboxid.style.display = 'block';
-        const chatinputid = document.getElementById('chat-input');
-        chatinputid.style.display = 'flex'
+            var x = document.getElementById("chatbox-container");
+            var y = document.getElementById("meeting-body");
+            if (x.style.display === "none") {
+                x.style.display = "flex";
+            }
+            else {
+                x.style.display = "none";
+            }
+            if (matches && y.style.display === "block") {
+                y.style.display = "none";
+            }
+            else {
+                y.style.display = "block";
+            }
+        }
+        else {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'none';
+            participantid.style.display = "none";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'none';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'block';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'flex'
+        }
     }
 
     const handleSidebar = () => {
