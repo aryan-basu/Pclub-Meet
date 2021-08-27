@@ -8,6 +8,7 @@ import Meeting from './components/Meeting/Meeting';
 import Preview from './components/Preview/Preview';
 import Home from './components/Home/Home'
 import {auth,createUserProfileDocument, } from './firebase/firebase.utils';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 
 class App extends React.Component{
   constructor(){
@@ -66,6 +67,7 @@ class App extends React.Component{
           <Route path='/home' exact component={Home} />
           <Route path='/meeting/:roomId' exact component={Meeting} />
           <Route path='/preview' exact component={Preview} />
+          <Route path='/forgotPassword' exact component={ForgotPassword} />
         </Switch>
       </Router>
     

@@ -55,6 +55,27 @@ class Signup extends React.Component {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     };
+
+    handleShowPassword = () => {
+        var y = document.getElementById("signUpPassword");
+        if(y.getAttribute("type") === "password") {
+            y.setAttribute("type", "text");
+        }
+        else {
+            y.setAttribute("type", "password")
+        }
+    }
+
+    handleShowConfirmPassword = () => {
+        var y = document.getElementById("signUpConfirmPassword");
+        if(y.getAttribute("type") === "password") {
+            y.setAttribute("type", "text");
+        }
+        else {
+            y.setAttribute("type", "password")
+        }
+    }
+
     render() {
         const { displayName, email, password, confirmPassword } = this.state;
         return (
@@ -100,13 +121,19 @@ class Signup extends React.Component {
                                 placeholder='Password'
                                 name='password'
                                 type='password'
+                                id='signUpPassword'
                                 value={password}
                                 onChange={this.handleChange}
                                 label="Filled" variant="filled"
-                                id="input-with-icon-adornment"
+                                // id="input-with-icon-adornment"
                                 startAdornment={
                                     <InputAdornment position="start" className='icons'>
                                         <VpnKeyIcon />
+                                    </InputAdornment>
+                                }
+                                endAdornment={
+                                    <InputAdornment position="start" className='icons'>
+                                        <i class="far fa-eye" id="togglePassword" onClick={this.handleShowPassword}></i>
                                     </InputAdornment>
                                 }
                             />
@@ -115,14 +142,20 @@ class Signup extends React.Component {
                                 className='input'
                                 type='password'
                                 name='confirmPassword'
+                                id='signUpConfirmPassword'
                                 value={confirmPassword}
                                 onChange={this.handleChange}
                                 placeholder='Confirm Password'
                                 label="Filled" variant="filled"
-                                id="input-with-icon-adornment"
+                                // id="input-with-icon-adornment"
                                 startAdornment={
                                     <InputAdornment position="start" className='icons'>
                                         <VpnKeyIcon />
+                                    </InputAdornment>
+                                }
+                                endAdornment={
+                                    <InputAdornment position="start" className='icons'>
+                                        <i class="far fa-eye" id="togglePassword" onClick={this.handleShowConfirmPassword}></i>
                                     </InputAdornment>
                                 }
                             />
