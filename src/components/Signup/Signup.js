@@ -28,7 +28,7 @@ class Signup extends React.Component {
         const { history } = this.props;
         const { displayName, email, password, confirmPassword } = this.state;
         if (password !== confirmPassword) {
-            alert("password don't match");
+            window.alert("password don't match");
             return;
         }
         try {
@@ -48,7 +48,7 @@ class Signup extends React.Component {
             history.push('/home');
         }
         catch (error) {
-            console.log(error);
+            window.alert(`${error}`);
         }
     };
     handleChange = event => {
