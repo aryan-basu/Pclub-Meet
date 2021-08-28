@@ -508,7 +508,7 @@ const Meeting = (props) => {
 
                     <div className="bottom-nav" >
                         <div className="bottom-left">
-                            <i className="fas fa-hand-paper media-icon one" ></i>
+                            <i className="fas fa-copy media-icon one"onClick={() => {navigator.clipboard.writeText(roomId)}} ></i>
                             <i className="fas fa-ellipsis-h media-icon two" onClick={handleSidebar}></i>
                         </div>
                         <div className="bottom-mid">
