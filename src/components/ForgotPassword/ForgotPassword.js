@@ -10,6 +10,9 @@ const ForgotPassword = () => {
 
     const handleSubmit = (e) => {
         console.log(email);
+          console.log(email);
+        firebase.auth().sendPasswordResetEmail(email);
+        window.alert("Reset Password Link has been sent to your Email.")
     }
 
     return (
