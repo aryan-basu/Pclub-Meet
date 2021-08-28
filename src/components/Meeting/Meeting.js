@@ -7,6 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Input from '@material-ui/core/Input';
 
 const socket = io("https://pclub-meet-backend.herokuapp.com/");
 
@@ -542,8 +543,9 @@ const Meeting = (props) => {
                         </div>
                     </div>
                     <div id="chat-input" >
-                        <input
+                        <Input
                             type="text"
+                            disableUnderline={true}
                             // id='message'
                             autoComplete="off"
                             placeholder="Type a message..."
