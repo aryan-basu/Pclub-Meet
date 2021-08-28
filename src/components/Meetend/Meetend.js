@@ -5,7 +5,7 @@ import '../Home/Home.css'
 import Header from '../Header/Header';
 import { useHistory } from 'react-router-dom';
 import './Meetend.css'
-import HeaderLogo from '../HeaderLogo/HeaderLogo';
+import Logo from '../HeaderLogo/HeaderLogo';
 
 
 const Meetend = () => {
@@ -16,7 +16,7 @@ const Meetend = () => {
     return (
         <div>
             {/* <Header /> */}
-            <HeaderLogo />
+            <Logo />
             <div className="meetend">
                 <p>You left the meeting</p>
                 <Button className="btn" onClick={handleback}>Back To Home screen</Button>
