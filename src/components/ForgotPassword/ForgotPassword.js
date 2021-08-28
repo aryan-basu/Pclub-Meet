@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useState } from "react"
 import "./ForgotPassword.css"
-import HeaderLogo from '../HeaderLogo/HeaderLogo';
+import Logo from '../HeaderLogo/HeaderLogo';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
 
     return (
         <div>
-            <HeaderLogo />
+            <Logo />
             <div className="forgotpassword-container">
                 <div className="forgotpassword-header">
                     Forgot Your Password?
