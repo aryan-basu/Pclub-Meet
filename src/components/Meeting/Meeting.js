@@ -7,6 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Input from '@material-ui/core/Input';
 
 const socket = io("https://pclub-meet-backend.herokuapp.com/");
 
@@ -396,29 +397,86 @@ const Meeting = (props) => {
         setMessage(event.target.value)
     }
     function handlesection() {
-        const participantid = document.getElementById('participant');
-        const partname = document.getElementById('partname');
-        partname.style.display = 'block';
-        participantid.style.display = "block";
-        const participantwindow = document.getElementById('participant-window');
-        participantwindow.style.display = 'block';
-        const chatboxid = document.getElementById('chatbox');
-        chatboxid.style.display = 'none';
-        const chatinputid = document.getElementById('chat-input');
-        chatinputid.style.display = 'none'
+        if (matches) {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'block';
+            participantid.style.display = "block";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'block';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'none';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'none'
+
+            var x = document.getElementById("chatbox-container");
+            var y = document.getElementById("meeting-body");
+            if (x.style.display === "none") {
+                x.style.display = "flex";
+            }
+            else {
+                x.style.display = "none";
+            }
+            if (matches && y.style.display === "block") {
+                y.style.display = "none";
+            }
+            else {
+                y.style.display = "block";
+            }
+        }
+        else {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'block';
+            participantid.style.display = "block";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'block';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'none';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'none'
+        }
     }
     function handlechat() {
+        if (matches) {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'none';
+            participantid.style.display = "none";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'none';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'block';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'flex'
 
-        const participantid = document.getElementById('participant');
-        const partname = document.getElementById('partname');
-        partname.style.display = 'none';
-        participantid.style.display = "none";
-        const participantwindow = document.getElementById('participant-window');
-        participantwindow.style.display = 'none';
-        const chatboxid = document.getElementById('chatbox');
-        chatboxid.style.display = 'block';
-        const chatinputid = document.getElementById('chat-input');
-        chatinputid.style.display = 'flex'
+            var x = document.getElementById("chatbox-container");
+            var y = document.getElementById("meeting-body");
+            if (x.style.display === "none") {
+                x.style.display = "flex";
+            }
+            else {
+                x.style.display = "none";
+            }
+            if (matches && y.style.display === "block") {
+                y.style.display = "none";
+            }
+            else {
+                y.style.display = "block";
+            }
+        }
+        else {
+            const participantid = document.getElementById('participant');
+            const partname = document.getElementById('partname');
+            partname.style.display = 'none';
+            participantid.style.display = "none";
+            const participantwindow = document.getElementById('participant-window');
+            participantwindow.style.display = 'none';
+            const chatboxid = document.getElementById('chatbox');
+            chatboxid.style.display = 'block';
+            const chatinputid = document.getElementById('chat-input');
+            chatinputid.style.display = 'flex'
+        }
     }
 
     const handleSidebar = () => {
@@ -485,8 +543,9 @@ const Meeting = (props) => {
                         </div>
                     </div>
                     <div id="chat-input" >
-                        <input
+                        <Input
                             type="text"
+                            disableUnderline={true}
                             // id='message'
                             autoComplete="off"
                             placeholder="Type a message..."
