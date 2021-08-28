@@ -34,13 +34,13 @@
     z-index: 1;
     position: absolute;
     display: flex;
-    padding: 6px;
-    background-color: rgba(var(--color1), 0.8);
-    margin: 0.5rem;
+    padding: 2px 4px;
+    margin: 0.2rem;
     color: white;
-    border-radius: 0.25rem;
-    cursor: pointer;
+    border-radius: 0.2rem;
+    cursor: default;
     transition: all 0.24s linear;
+    background-color: rgba(27,33,39,0.8);
 }
       
 /* https://codepen.io/villa7/pen/yOMZoB */
@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: -1px 0 12px black;
+  transition: all 0.24s linear;
 }
 .chatname-container {
   display: flex;
@@ -320,6 +321,9 @@
   .fa-times {
     display: none;
   }
+  .video-element {
+    font-size: 1.1vw;
+  }
 }
 
 @media (min-width: 400px) and (max-width: 800px) {
@@ -358,6 +362,9 @@
   }
   #chat-input input {
     width: 70vw;
+  }
+  .video-element {
+    font-size: 2vw;
   }
 }
 
@@ -406,6 +413,9 @@
   #chatbox-container {
     min-width: 200px;
   }
+  .video-element {
+    font-size: 2.8vw;
+  }
 }
 
 #video-grid .video-wrapper {
@@ -428,7 +438,7 @@
   transition: all 0.24s linear;
 }
 
-#video-grid .video-wrapper .elements-wrapper .video-element {
+/* #video-grid .video-wrapper .elements-wrapper .video-element {
   outline: none;
   border: none;
   z-index: 1;
@@ -444,21 +454,21 @@
   cursor: pointer;
   -webkit-transition: all 0.24s linear;
   transition: all 0.24s linear;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .video-element ion-icon {
+/* #video-grid .video-wrapper .elements-wrapper .video-element ion-icon {
   pointer-events: none;
   -webkit-transition: all 0.24s linear;
   transition: all 0.24s linear;
   font-size: 1.3rem;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .video-element:hover {
+/* #video-grid .video-wrapper .elements-wrapper .video-element:hover {
   border: none;
   outline: none;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .video-off-indicator {
+/* #video-grid .video-wrapper .elements-wrapper .video-off-indicator {
   --indicatorSize: 80px;
   width: var(--indicatorSize);
   height: var(--indicatorSize);
@@ -484,9 +494,9 @@
   transition: all 0.24s all;
   opacity: 0;
   pointer-events: none;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .recording-indicator {
+/* #video-grid .video-wrapper .elements-wrapper .recording-indicator {
   margin: 14px;
   --size: 20px;
   position: absolute;
@@ -509,17 +519,17 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .recording-indicator div {
+/* #video-grid .video-wrapper .elements-wrapper .recording-indicator div {
   --offset: 10px;
   height: calc(var(--size) - var(--offset));
   width: calc(var(--size) - var(--offset));
   border-radius: 50%;
   background-color: #fe634f;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .effect-container {
+/* #video-grid .video-wrapper .elements-wrapper .effect-container {
   margin: 0.5rem;
   width: 32.8px;
   height: 32.8px;
@@ -534,9 +544,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper .effect-container .o1,
+/* #video-grid .video-wrapper .elements-wrapper .effect-container .o1,
 #video-grid .video-wrapper .elements-wrapper .effect-container .o2 {
   position: relative;
   height: 19%;
@@ -546,12 +556,12 @@
   border-radius: 200px;
   -webkit-transition: all linear 0.1s;
   transition: all linear 0.1s;
-}
-#video-grid .video-wrapper video {
+} */
+/* #video-grid .video-wrapper video {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-transition: all 0.24s linear;
   transition: all 0.24s linear;
-}
+} */

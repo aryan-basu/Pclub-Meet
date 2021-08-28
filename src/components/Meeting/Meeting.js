@@ -546,7 +546,6 @@ const Meeting = (props) => {
                         <Input
                             type="text"
                             disableUnderline={true}
-                            // id='message'
                             autoComplete="off"
                             placeholder="Type a message..."
                             onChange={setMessageText}
