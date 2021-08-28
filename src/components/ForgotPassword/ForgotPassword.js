@@ -3,14 +3,17 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useState } from "react"
 import "./ForgotPassword.css"
+
 import Logo from '../HeaderLogo/HeaderLogo';
+
+import firebase from 'firebase';
+
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e) => {
         console.log(email);
-          console.log(email);
         firebase.auth().sendPasswordResetEmail(email);
         window.alert("Reset Password Link has been sent to your Email.")
     }

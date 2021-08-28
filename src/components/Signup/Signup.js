@@ -28,6 +28,7 @@ class Signup extends React.Component {
         const { history } = this.props;
         const { displayName, email, password, confirmPassword } = this.state;
         if (password !== confirmPassword) {
+
                  window.alert("password don't match");
             return;
         }
@@ -48,6 +49,7 @@ class Signup extends React.Component {
             history.push('/home');
         }
         catch (error) {
+
         window.alert(`${error}`);
         }
     };
