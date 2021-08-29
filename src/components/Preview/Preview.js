@@ -5,8 +5,6 @@ import './Preview.css'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
-import { BiMicrophone } from 'react-icons/bi'
-import { IoVideocamOutline } from 'react-icons/io5'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
@@ -23,12 +21,9 @@ const Preview = (props) => {
     //states & ref's
     const history = useHistory();
     const location = useLocation();
-    //const location = useLocation();
     const [roomId, setroomId] = useState('');
     const myVideo = useRef()
-    //stream
     const [stream, setStream] = useState();
-    //states of audio & video
     const [audioState, setAudioState] = useState(true);
     const [videoState, setVideoState] = useState(true);
     const [isVideo, setIsVideo] = useState(true);
@@ -54,16 +49,10 @@ const Preview = (props) => {
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
-            console.log('mic disabled')
-
-            //render html
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
-            console.log('mic enabled')
-
-            //render html
         }
     }
 
@@ -74,12 +63,10 @@ const Preview = (props) => {
         if (enabled) {
             stream.getVideoTracks()[0].enabled = false;
             setVideoState(false)
-            //render html
         }
         else {
             stream.getVideoTracks()[0].enabled = true;
             setVideoState(true)
-            //render html
         }
     }
 
@@ -104,8 +91,7 @@ const Preview = (props) => {
                 const inputLink = document.getElementById('input-with-icon-adornment text')
                 inputLink.value = res.data.link
             })
-                .catch((err) => console.log(err))
-
+            .catch((err) => console.log(err))
         }
 
         else {
@@ -113,17 +99,12 @@ const Preview = (props) => {
             const inputLink = document.getElementById('input-with-icon-adornment text')
             inputLink.value = location.state.roomId
         }
-
-        // const videoButton = document.querySelector('#videoButton')
-        // videoButton.addEventListener('click', () => console.log('clicked'))
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // passing location here ALERT
-
-
+    }, []); 
 
     //handle button join
     const handleJoin = () => {
+
+        stream.getTracks().forEach(track => track.stop());
 
         const newPath = '/meeting/' + roomId
 
@@ -140,23 +121,15 @@ const Preview = (props) => {
         <div>
             <Header />
             <div className="preview-main">
-              {/*  <h1 className='heading'>Room #1</h1> */}
                 <Card className='card'>
                     <CardContent className='video'>
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-                            {/* <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
-                                <BiMicrophone />  
-                            </IconButton> 
-                            <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
-                                <IoVideocamOutline />
-                            </IconButton> */}
                         <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
-                {/* <Input type="text" variant="filled" className='username' placeholder='Add Username' /> */}
                 <div className='join'>
                     <Input
                         className='join-input'

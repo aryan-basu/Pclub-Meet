@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import './Signin.css'
 import firebase from 'firebase';
-// import { useHistory } from 'react-router';
 import { auth } from '../../firebase/firebase.utils';
 import { Link, withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -30,9 +29,7 @@ class Signin extends React.Component {
         try {
             await auth.signInWithEmailAndPassword(email, password)
             var user = firebase.auth().currentUser;
-            console.log(user);
             if (user != null) {
-                //this.setState({email:'',password:''});
                 history.push('/home');
             }
             else {
@@ -61,7 +58,6 @@ class Signin extends React.Component {
     }
 
     render() {
-        // const { history } = this.props;
         var uiConfig = {
             signInFlow: "popup",
             signInSuccessUrl: '/home',
@@ -71,7 +67,6 @@ class Signin extends React.Component {
                 firebase.auth.GithubAuthProvider.PROVIDER_ID
             ],
             tosUrl: '<your-tos-url>',
-            // Privacy policy url.
             privacyPolicyUrl: '<your-privacy-policy-url>'
         };
         const { email, password } = this.state;
@@ -116,12 +111,9 @@ class Signin extends React.Component {
                                     type='password'
                                     name='password'
                                     id="password"
-                                    // value={this.state.password}
                                     value={password}
                                     onChange={this.handleChange}
-                                    // value={password}
                                     label="Filled" variant="filled"
-                                    // id="input-with-icon-adornment"
                                     startAdornment={
                                         <InputAdornment position="start" className='icons'>
                                             <VpnKeyIcon />
