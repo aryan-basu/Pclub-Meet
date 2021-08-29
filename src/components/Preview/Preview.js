@@ -104,7 +104,7 @@ const Preview = (props) => {
     //handle button join
     const handleJoin = () => {
 
-        //stream.getTracks().forEach(track => track.stop());
+        stream.getTracks().forEach(track => track.stop());
 
         const newPath = '/meeting/' + roomId
 
