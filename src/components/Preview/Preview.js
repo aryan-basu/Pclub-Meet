@@ -5,8 +5,6 @@ import './Preview.css'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
-import { BiMicrophone } from 'react-icons/bi'
-import { IoVideocamOutline } from 'react-icons/io5'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
@@ -35,8 +33,7 @@ const Preview = (props) => {
     const [isMic, setIsMic] = useState(true);
 
 
-    //firebase
-    // var user = firebase.auth().currentUser;
+
     firebase.auth().onAuthStateChanged(function (user) {
 
         if (user) {
@@ -114,11 +111,8 @@ const Preview = (props) => {
             inputLink.value = location.state.roomId
         }
 
-        // const videoButton = document.querySelector('#videoButton')
-        // videoButton.addEventListener('click', () => console.log('clicked'))
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // passing location here ALERT
+      
+    }, []); 
 
 
 
@@ -140,23 +134,18 @@ const Preview = (props) => {
         <div>
             <Header />
             <div className="preview-main">
-              {/*  <h1 className='heading'>Room #1</h1> */}
+           
                 <Card className='card'>
                     <CardContent className='video'>
                         <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <i onClick={handleAudioClick} className={`${isMic ? 'far fa-microphone media-icon three' : 'far fa-microphone-slash media-icon three'}`} ></i>
-                            {/* <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
-                                <BiMicrophone />  
-                            </IconButton> 
-                            <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
-                                <IoVideocamOutline />
-                            </IconButton> */}
+                         
                         <i onClick={handleVideoClick} className={`${isVideo ? 'far fa-video media-icon five' : 'far fa-video-slash media-icon five'}`}></i>
                     </CardActions>
                 </Card>
-                {/* <Input type="text" variant="filled" className='username' placeholder='Add Username' /> */}
+      
                 <div className='join'>
                     <Input
                         className='join-input'

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import Header from './components/Header/Header';
+
 import Signin from './components/Login/Signin'
 import Signup from './components/Signup/Signup';
 import Meetend from './components/Meetend/Meetend';
@@ -21,9 +21,7 @@ class App extends React.Component{
   componentDidMount(){
     this.unsubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
 
-      //this.setState({currentUser:user});
-      //console.log(user);
-     // createUserProfileDocument(user);
+    
      if(userAuth){
       const userRef=await createUserProfileDocument(userAuth);
 
@@ -37,7 +35,7 @@ class App extends React.Component{
 
           }
         });
-     console.log(this.state);
+   
 
        });
 

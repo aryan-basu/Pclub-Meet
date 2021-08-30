@@ -6,10 +6,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button'
 import Email from '@material-ui/icons/Email'
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 import './Signup.css'
-// import '../Login/Signin.css'
-// import '../Login/Signin'
+
 import Header from '../Header/Header';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import { withRouter } from 'react-router-dom';

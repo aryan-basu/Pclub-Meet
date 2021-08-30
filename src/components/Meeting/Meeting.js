@@ -12,16 +12,6 @@ import Input from '@material-ui/core/Input';
 const socket = io("https://pclub-meet-backend.herokuapp.com/");
 
 const Meeting = (props) => {
-
-    //const videoContainer = {};
-
-    //console.log(roomname);
-
-
-    //to get the number of clients in this room
-
-
-    //firebase
     const roomId = props.match.params.roomId;
 
     const history = useHistory();
@@ -132,7 +122,7 @@ const Meeting = (props) => {
     }
 
     const connectToNewUser = (userId, stream, myPeer) => {
-        //console.log(myId);
+      
         const call = myPeer.call(userId, stream, { metadata: { id: myId } });
         const video = document.createElement('video')//don't mute this
         call.on('stream', userVideoStream => {
@@ -140,7 +130,7 @@ const Meeting = (props) => {
                 if (doc.exists) {
 
                     const name = doc.data().username;
-                    // Use a City instance method
+                   
                     addVideoStream(video, userVideoStream, userId, name)
 
                 } else {
@@ -167,7 +157,7 @@ const Meeting = (props) => {
         myPeer.on('open', id => {
             myId = id
             myVideo.id = id
-            //console.log(myId)
+       
 
             socket.emit('join-room', props.match.params.roomId, id, abc.displayName)
         })
@@ -187,7 +177,7 @@ const Meeting = (props) => {
             setCount(count + 1);
             console.log(count);
             console.log('socket-connected');
-            //console.log(count);
+            
         })
 
         socket.on('user-disconnected', userId => {
@@ -209,28 +199,17 @@ const Meeting = (props) => {
             console.log('socket-error');
         })
 
-        //console.log(roomname);
+        
 
     }
-    /*
-        const handleEnterKey = (e) => {
-            // console.log(e, message)
-            if (e.key === "Enter" && message.length !== 0) {
-                socket.emit("message", message)
-                setMessage("")
-            }
-        };
-    */
+   
     const removeVideo = (id) => {
         const video = document.getElementById(id);
         if (video) video.remove();
     }
 
     const handleDisconnect = () => {
-        // const myMediaTracks = videoContainer[myId].getTracks();
-        // myMediaTracks?.forEach((track) => {
-        //     track.stop();
-        // })
+       
         socket.disconnect();
         myPeer.destroy();
         history.push('/meetend')
@@ -238,7 +217,7 @@ const Meeting = (props) => {
 
     useEffect(() => {
 
-        const myPeer = new Peer(undefined, { // initialzing my peer object
+        const myPeer = new Peer(undefined, { 
             host: 'pclub-meet-backend.herokuapp.com',
             port: '443',
             path: '/peerjs',
@@ -297,10 +276,7 @@ const Meeting = (props) => {
             // Get room and users
             const userList = document.getElementById('users');
             socket.on('roomUsers', ({ roomId, users }) => {
-                //  outputRoomName(room);
-                //outputUsers(users);
-                //console.log(users);
-                //console.log(roomId);
+             
                 userList.innerHTML = '';
                 users.forEach((user) => {
                     const li = document.createElement('li');
@@ -313,14 +289,9 @@ const Meeting = (props) => {
 
 
             socket.on('user-connected', userId => {
-                //console.log(userId);
+              
                 if (userId !== myId) {
-                    // user is joining
-                    // setTimeout(() => {
-                    //     // user joined
-
-                    // }, 1000)
-                    //connectToNewUser(userId, stream, myPeer)
+                
                     setTimeout(() => {
                         // user joined
                         connectToNewUser(userId, stream, myPeer)
@@ -352,42 +323,15 @@ const Meeting = (props) => {
 
     }, [])
 
-    /* const addMessageElement = (message, userId, id) => {
-         console.log(id, userId)
-         const msg = document.createElement('div')
-         msg.innerHTML =
-             `<article class="msg-container ${userId === myId ? "msg-self" : "msg-remote"}" id="msg-0">
-                     <div class="msg-box">
-                         <div class="flr">
-                             <div class="messages">
-                                 <p class="msg" id="msg-1">
-                                 ${userId}: ${message}
-                                 </p>
-                             </div>
-                         </div>
-                     </div>
-                 </article>`;
-         // if(message.current)
-         messages.current.append(msg);
-     }
-  
-     */
-
-    /*
-        const setMessageText = (event) => {
-            setMessage(event.target.value)
-        } */
-
     function sendMessage() {
-        // var msg = document.getElementById('message').value;
-        // console.log(msg);
+       
         if (message) {
             socket.emit('msg', { message, user: abc.displayName });
             setMessage("")
         }
     }
     const handleEnterKey = (e) => {
-        // var msg = document.getElementById('message').value;
+       
         if (e.key === "Enter" && message.length !== 0) {
             socket.emit('msg', { message, user: abc.displayName });
             setMessage("")

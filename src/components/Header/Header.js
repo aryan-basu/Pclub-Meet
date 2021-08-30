@@ -1,12 +1,9 @@
 import React from 'react';
 import Clock from 'react-live-clock';
 import './Header.css';
-import IconButton from '@material-ui/core/IconButton';
-import { IoMdPerson } from 'react-icons/io';
 import Logo from '../assets/images/Logo.png';
 
-// import firebase from 'firebase';
-// import { useHistory } from 'react-router-dom';
+
 
 const Header = () => {
 
@@ -26,9 +23,7 @@ const Header = () => {
                     <div className="line"></div>
                     <h1>Meetings</h1>
                 </div>
-                {/* <IconButton className='button'>
-                        <IoMdPerson className='icons' />
-                    </IconButton> */}
+            
             </div>
     );
 }

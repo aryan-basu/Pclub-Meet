@@ -1,8 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button'
-// import Button from '@material-ui/core/Button'
 import '../Home/Home.css'
-import Header from '../Header/Header';
 import { useHistory } from 'react-router-dom';
 import './Meetend.css'
 import Logo from '../HeaderLogo/HeaderLogo';
@@ -15,7 +13,7 @@ const Meetend = () => {
     }
     return (
         <div>
-            {/* <Header /> */}
+          
             <Logo />
             <div className="meetend">
                 <p>You left the meeting</p>

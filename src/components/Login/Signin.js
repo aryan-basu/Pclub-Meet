@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import './Signin.css'
 import firebase from 'firebase';
-// import { useHistory } from 'react-router';
 import { auth } from '../../firebase/firebase.utils';
 import { Link, withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -30,7 +29,7 @@ class Signin extends React.Component {
         try {
             await auth.signInWithEmailAndPassword(email, password)
             var user = firebase.auth().currentUser;
-            console.log(user);
+           
             if (user != null) {
                 //this.setState({email:'',password:''});
                 history.push('/home');
