@@ -209,7 +209,7 @@ const Meeting = (props) => {
     }
 
     const handleDisconnect = () => {
-       
+        stream.getTracks().forEach(track => track.stop());
         socket.disconnect();
         myPeer.destroy();
         history.push('/meetend')
