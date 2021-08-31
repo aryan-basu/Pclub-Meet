@@ -17,30 +17,46 @@
   grid-gap: 0.85rem;
   position: relative;
 }
-  
-        
+
+.video-area video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+}
+
 .elements-wrapper {
   z-index: 1;
-  position: absolute;
+  /* position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; */
   transition: all 0.24s linear;
 }
+
+.video-wrapper {
+  max-width: 35vw;
+  max-height: 35vh;
+  margin: 0 auto;
+}
+
 .video-element {
-    outline: none;
-    border: none;
-    z-index: 1;
-    position: absolute;
-    display: flex;
-    padding: 2px 4px;
-    margin: 0.2rem;
-    color: white;
-    border-radius: 0.2rem;
-    cursor: default;
-    transition: all 0.24s linear;
-    background-color: rgba(27,33,39,0.8);
+  outline: none;
+  border: none;
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  padding: 2px 4px;
+  margin: 0.2rem;
+  color: white;
+  border-radius: 0.2rem;
+  cursor: default;
+  transition: all 0.24s linear;
+  background-color: rgba(27,33,39,0.8);
 }
       
 /* https://codepen.io/villa7/pen/yOMZoB */
@@ -366,6 +382,11 @@
   .video-element {
     font-size: 2vw;
   }
+  .video-wrapper {
+    max-width: 35vw;
+    max-height: 28vh;
+    margin: 0 auto;
+  }
 }
 
 @media screen and (max-width: 400px) {
@@ -416,17 +437,21 @@
   .video-element {
     font-size: 2.8vw;
   }
+  .video-wrapper {
+    max-width: 40vw;
+    max-height: 20vh;
+  }
 }
 
-#video-grid .video-wrapper {
+/* #video-grid .video-wrapper {
   position: relative;
   -webkit-transition: all 0.24s linear;
   transition: all 0.24s linear;
   border-radius: 0.25rem;
   overflow: hidden;
-}
+} */
 
-#video-grid .video-wrapper .elements-wrapper {
+/* #video-grid .video-wrapper .elements-wrapper {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -436,7 +461,7 @@
   color:white;
   -webkit-transition: all 0.24s linear;
   transition: all 0.24s linear;
-}
+} */
 
 /* #video-grid .video-wrapper .elements-wrapper .video-element {
   outline: none;
