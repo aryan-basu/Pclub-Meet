@@ -97,12 +97,12 @@ const Meeting = (props) => {
         const enabled = stream.getAudioTracks()[0].enabled;
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
-            console.log('mic disabled')
+            // console.log('mic disabled')
             //render html
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
-            console.log('mic enabled')
+            // console.log('mic enabled')
             //render html
         }
     }
@@ -134,18 +134,18 @@ const Meeting = (props) => {
                     addVideoStream(video, userVideoStream, userId, name)
 
                 } else {
-                    console.log("No such document!");
+                    // console.log("No such document!");
                 }
             }).catch((error) => {
-                console.log("Error getting document:", error);
+                // console.log("Error getting document:", error);
             });
         })
         call.on('close', () => {
-            console.log("connect to user id" + userId)
+            // console.log("connect to user id" + userId)
             removeVideo(userId)
         })
         call.on('error', () => {
-            console.log('peer error ------')
+            // console.log('peer error ------')
             removeVideo(userId);
         })
 
@@ -163,7 +163,7 @@ const Meeting = (props) => {
         })
 
         myPeer.on('error', (err) => {
-            console.log('peer-connection-error', err);
+            // console.log('peer-connection-error', err);
             myPeer.reconnect();
         })
     }
@@ -175,8 +175,8 @@ const Meeting = (props) => {
 
         socket.on('connect', () => {
             setCount(count + 1);
-            console.log(count);
-            console.log('socket-connected');
+            // console.log(count);
+            // console.log('socket-connected');
             
         })
 
@@ -185,18 +185,18 @@ const Meeting = (props) => {
                 firebase.firestore().collection(`${roomId}`).doc(`${userId}`).delete();
                 peers[userId].close()
             }
-            console.log("socket userid " + userId)
+            // console.log("socket userid " + userId)
             removeVideo(userId);
             setCount(count - 1);
-            console.log(count);
+            // console.log(count);
         })
 
         socket.on('disconnect', () => {
-            console.log('socket-disconnected');
+            // console.log('socket-disconnected');
         })
 
         socket.on('error', () => {
-            console.log('socket-error');
+            // console.log('socket-error');
         })
 
         
@@ -254,20 +254,20 @@ const Meeting = (props) => {
                             // Use a City instance method
 
                         } else {
-                            console.log("No such document!");
+                            // console.log("No such document!");
                         }
                     }).catch((error) => {
-                        console.log("Error getting document:", error);
+                        // console.log("Error getting document:", error);
                     });
                 })
 
                 call.on('close', () => {
-                    console.log("on close id : " + call.metadata.id);
+                    // console.log("on close id : " + call.metadata.id);
                     removeVideo(call.metadata.id)
                 })
 
                 call.on('error', () => {
-                    console.log('peer error ------');
+                    // console.log('peer error ------');
                     removeVideo(call.metadata.id);
                 });
 
@@ -302,7 +302,7 @@ const Meeting = (props) => {
 
             socket.on('newmsg', function (data) {
                 // client side data fetch
-                console.log(data.user, data.message);
+                // console.log(data.user, data.message);
                 const msg = document.createElement('div')
                 msg.innerHTML =
                     `<article class="msg-container msg-remote" id="msg-0">

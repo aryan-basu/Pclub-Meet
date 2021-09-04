@@ -37,7 +37,7 @@ class Signin extends React.Component {
                 history.push('/');
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
 
     };
