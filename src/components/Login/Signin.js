@@ -12,7 +12,6 @@ import { auth } from '../../firebase/firebase.utils';
 import { Link, withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
 
-
 class Signin extends React.Component {
     constructor(props) {
         super(props);
@@ -38,7 +37,7 @@ class Signin extends React.Component {
                 history.push('/');
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
 
     };
@@ -60,7 +59,11 @@ class Signin extends React.Component {
     }
 
     render() {
-        // const { history } = this.props;
+        const user = firebase.auth().currentUser;
+        const { history } = this.props;
+        if(user) {
+            history.push("/home");
+        }
         var uiConfig = {
             signInFlow: "popup",
             signInSuccessUrl: '/home',

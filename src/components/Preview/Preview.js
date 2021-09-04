@@ -15,7 +15,6 @@ import firebase from 'firebase';
 import Header from '../Header/Header';
 
 
-
 const Preview = (props) => {
 
     //states & ref's
@@ -31,8 +30,6 @@ const Preview = (props) => {
     const [videoState, setVideoState] = useState(true);
     const [isVideo, setIsVideo] = useState(true);
     const [isMic, setIsMic] = useState(true);
-
-
 
     firebase.auth().onAuthStateChanged(function (user) {
 
@@ -51,14 +48,14 @@ const Preview = (props) => {
         if (enabled) {
             stream.getAudioTracks()[0].enabled = false;
             setAudioState(false)
-            console.log('mic disabled')
+            // console.log('mic disabled')
 
             //render html
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
             setAudioState(true)
-            console.log('mic enabled')
+            // console.log('mic enabled')
 
             //render html
         }
@@ -101,7 +98,7 @@ const Preview = (props) => {
                 const inputLink = document.getElementById('input-with-icon-adornment text')
                 inputLink.value = res.data.link
             })
-                .catch((err) => console.log(err))
+                .catch((err) => {/*console.log(err)*/})
 
         }
 
