@@ -6,8 +6,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button'
 import Email from '@material-ui/icons/Email'
-
-import './Signup.css'
+import firebase from 'firebase';
+import './Signup.css';
 
 import Header from '../Header/Header';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
@@ -78,10 +78,15 @@ class Signup extends React.Component {
     }
 
     render() {
+        const user = firebase.auth().currentUser;
+        const { history } = this.props;
+        if(user) {
+            history.push("/home");
+        }
         const { displayName, email, password, confirmPassword } = this.state;
         return (
             <div>
-                <Header currentUser={this.state.currentUser} />
+                <Header/>
 
                 <div className="signup-card">
                     <h2>Sign Up</h2>

@@ -4,16 +4,22 @@ import '../Home/Home.css'
 import { useHistory } from 'react-router-dom';
 import './Meetend.css'
 import Logo from '../HeaderLogo/HeaderLogo';
-
+import firebase from 'firebase';
+import { Redirect } from 'react-router-dom';
 
 const Meetend = () => {
-    const history = useHistory();
+    let history = useHistory();
+    const user = firebase.auth().currentUser;
+    if (user) {
+        
+      } else {
+        history.push("/");
+      }
     const handleback = () => {
-        history.push('/');
+        history.push('/home');
     }
     return (
         <div>
-          
             <Logo />
             <div className="meetend">
                 <p>You left the meeting</p>

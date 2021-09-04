@@ -14,14 +14,14 @@ const Home = (props) => {
     let textInput = React.createRef();
     var user = firebase.auth().currentUser;
     var fullname;
-   
+    if(user == null) {
+        history.push("/");
+    }
+
     if (user !== null) {
         fullname = user.displayName.split(' ')[0];
        
     }
-
-
-
     async function handleLogout() {
         await firebase.auth().signOut();
         history.push("/");

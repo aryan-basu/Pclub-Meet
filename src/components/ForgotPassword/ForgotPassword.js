@@ -3,13 +3,18 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useState } from "react"
 import "./ForgotPassword.css"
-
+import { useHistory } from 'react-router-dom';
 import Logo from '../HeaderLogo/HeaderLogo';
 
 import firebase from 'firebase';
 
 
 const ForgotPassword = () => {
+    const user = firebase.auth().currentUser;
+    let history = useHistory();
+    if(user) {
+        history.push("/home");
+    }
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e) => {

@@ -439,12 +439,17 @@ const Meeting = (props) => {
             y.style.display = "block";
         }
     }
+
+    if(abc == null) {
+        history.push("/");
+    }
+
     return (
 
         <div className="meeting-container" >
             <div className="meeting-main">
                 <div id="meeting-body">
-                    <div className="video-area" >
+                    <div className="video-area">
                         <div id="video-grid" ref={videoGrid} >
 
                         </div>

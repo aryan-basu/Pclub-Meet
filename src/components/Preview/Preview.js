@@ -15,7 +15,6 @@ import firebase from 'firebase';
 import Header from '../Header/Header';
 
 
-
 const Preview = (props) => {
 
     //states & ref's
@@ -31,8 +30,6 @@ const Preview = (props) => {
     const [videoState, setVideoState] = useState(true);
     const [isVideo, setIsVideo] = useState(true);
     const [isMic, setIsMic] = useState(true);
-
-
 
     firebase.auth().onAuthStateChanged(function (user) {
 
