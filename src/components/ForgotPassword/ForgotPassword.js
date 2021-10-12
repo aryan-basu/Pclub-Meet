@@ -11,6 +11,7 @@ import firebase from 'firebase';
 
 const ForgotPassword = () => {
     const user = firebase.auth().currentUser;
+   
     let history = useHistory();
     if(user) {
         history.push("/home");
@@ -20,6 +21,7 @@ const ForgotPassword = () => {
     const handleSubmit = (e) => {
       
         firebase.auth().sendPasswordResetEmail(email);
+      
         window.alert("Reset Password Link has been sent to your Email.")
     }
 
@@ -31,6 +33,7 @@ const ForgotPassword = () => {
                     Forgot Your Password?
                 </div>
                 <p>Enter the email you used while sign up</p>
+                
                 <Input
                     className='input'
                     type='text'

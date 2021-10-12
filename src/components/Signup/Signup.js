@@ -7,7 +7,9 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button'
 import Email from '@material-ui/icons/Email'
 import firebase from 'firebase';
+import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import './Signup.css';
+
 
 import Header from '../Header/Header';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
@@ -20,15 +22,16 @@ class Signup extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
+            login_error: false,
         }
+        
     }
     handleSubmit = async event => {
         event.preventDefault();
         const { history } = this.props;
         const { displayName, email, password, confirmPassword } = this.state;
         if (password !== confirmPassword) {
-
-                 window.alert("password don't match");
+            this.setState({login_error:"Password do not match"})
             return;
         }
         try {
@@ -49,7 +52,7 @@ class Signup extends React.Component {
         }
         catch (error) {
 
-        window.alert(`${error}`);
+        this.setState({login_error:`${error}`});
         }
     };
     handleChange = event => {
@@ -83,7 +86,7 @@ class Signup extends React.Component {
         if(user) {
             history.push("/home");
         }
-        const { displayName, email, password, confirmPassword } = this.state;
+        const { displayName, email, password, confirmPassword,login_error } = this.state;
         return (
             <div>
                 <Header/>
@@ -93,6 +96,7 @@ class Signup extends React.Component {
                     <FormControl className='signup-form' onSubmit={this.handleSubmit} autoComplete="off">
 
                         <form onSubmit={this.handleSubmit}>
+                        {login_error && <ErrorMessage>{login_error}</ErrorMessage>}
                             <Input
                                 required
                                 className='input'
