@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import './Signin.css'
 import firebase from 'firebase';
+import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import { auth } from '../../firebase/firebase.utils';
 import { Link, withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -17,7 +18,8 @@ class Signin extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            login_error: false
         };
     }
 
@@ -37,7 +39,7 @@ class Signin extends React.Component {
                 history.push('/');
             }
         } catch (error) {
-            // console.log(error);
+            this.setState({login_error:"Enter Valid Credentials"})
         }
 
     };
@@ -76,7 +78,7 @@ class Signin extends React.Component {
             // Privacy policy url.
             privacyPolicyUrl: '<your-privacy-policy-url>'
         };
-        const { email, password } = this.state;
+        const { email, password, login_error } = this.state;
         return (
 
             <div>
@@ -94,6 +96,7 @@ class Signin extends React.Component {
                         <h2>Sign In</h2>
                         <FormControl className='signin-form' autoComplete="off">
                             <form onSubmit={this.handleSubmit}>
+                            {login_error && <ErrorMessage>{login_error}</ErrorMessage>}
                                 <Input
                                     required
                                     className='input'
