@@ -5,12 +5,14 @@ import { useState } from "react"
 import "./ForgotPassword.css"
 import { useHistory } from 'react-router-dom';
 import Logo from '../HeaderLogo/HeaderLogo';
+import SuccessMessage from "../SuccessMessage/SuccessMessage"
 
 import firebase from 'firebase';
 
 
 const ForgotPassword = () => {
     const user = firebase.auth().currentUser;
+    const [reset_complete, setResetComplete] = useState(false); 
    
     let history = useHistory();
     if(user) {
@@ -19,10 +21,8 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e) => {
-      
-        firebase.auth().sendPasswordResetEmail(email);
-      
-        window.alert("Reset Password Link has been sent to your Email.")
+        firebase.auth().sendPasswordResetEmail(email);      
+        setResetComplete(true);
     }
 
     return (
@@ -33,7 +33,7 @@ const ForgotPassword = () => {
                     Forgot Your Password?
                 </div>
                 <p>Enter the email you used while sign up</p>
-                
+                {reset_complete && <SuccessMessage>{"Reset Password Link has been sent to your Email."}</SuccessMessage>}  
                 <Input
                     className='input'
                     type='text'
